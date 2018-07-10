@@ -77,7 +77,6 @@ main {
 }
 
 .form-btn{
-    background:#7F7FD5;
     display:block;
     width:100%;
     text-align:center;
@@ -106,9 +105,25 @@ main {
     -webkit-touch-callout:none;
 }
 .form-btn:focus,.form-btn:hover{
-    background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); 
-    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); }
+    opacity: 0.5;
+}
 
+.btn-login{
+    background:#7F7FD5;
+}
+.btn-login:hover, btn-login:focus{
+    background:#7F7FD5;
+    background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); 
+    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+}
+.btn-register{
+    background: #8360c3; 
+}
+.btn-register:hover, .btn-register:focus{
+    background: #8360c3; 
+    background: -webkit-linear-gradient(to right, #2ebf91, #8360c3); 
+    background: linear-gradient(to right, #2ebf91, #8360c3);
+}
 /** Screen sizes 400px and up **/
 @media(min-width: 400px) {
     .textbox input {

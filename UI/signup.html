@@ -13,18 +13,25 @@
     </header>
     <main>
         <div class="login-box">
-            <h1>Login</h1>
+            <h1>Create an account</h1>
             <form action="">
-                <div class="textbox">
+               <div class="textbox">
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <input type="email" placeholder="Email" name="" id="">
+                    <input type="text" placeholder="Full Name" name="fullname" aria-hidden="true">
+                </div>
+                <div class="textbox">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <input type="email" placeholder="Email" name="email">
                 </div>
                 <div class="textbox">
                     <i class="fa fa-lock" aria-hidden="true"></i>
-                    <input type="password" placeholder="Password" name="Password" id="">
+                    <input type="password" placeholder="Password" name="password">
                 </div>
-
-                <input type="submit" value="Log in" class="form-btn btn-login">
+                <div class="textbox">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <input type="password" placeholder="Confirm password" name="confirm-password">
+                </div>
+                <input type="submit" value="Sign Up" class="form-btn btn-register">
             </form>
         </div>
         

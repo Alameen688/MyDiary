@@ -29,7 +29,6 @@ main {
     padding: 25px 20px;
     width: 80%;
     margin: 50px auto;
-    margin-top: 50px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
     background: rgba(33.3,33.3,33.3, 0.5);
     color: #fff;
@@ -207,4 +206,26 @@ a.item {
   .entry-grid .item {
     flex: 1 1 calc(100% - 20px);
   }
+}
+
+/** View entry styles**/
+#entry-content-box{
+    overflow: hidden;
+    padding: 25px 20px;
+    width: 80%;
+    margin: 50px auto;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+    color: #fff;
+}
+#entry-title{
+    border-bottom: 3px solid #FAEDB8;
+    padding-bottom: 5px;
+    margin-bottom: 40px;
+}
+#entry-content{
+    padding: 20px;
+    background: rgb(220,211,178);
+    color: #666;
+    border-radius: 5px;
+    font-size: 1.1rem;
 }

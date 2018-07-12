@@ -100,10 +100,14 @@ main {
 }
 .btn-entry{
     margin: 0 auto;
-    background:#7F7FD5;
     width: 85%;
 }
-
+#new-entry-btn{
+    background: rgba(72,177,191,0.5);  /*royal blue */
+}
+#edit-entry-btn{
+    background: rgba(32,227,178,0.5);   
+}
 
 /** Screen sizes 900px and up **/
 @media(min-width: 900px) {

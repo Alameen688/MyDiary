@@ -26,13 +26,11 @@ main {
 
 #write-box{
     overflow: hidden;
-    padding: 15px 20px;
+    padding: 25px 20px;
     width: 80%;
     margin: 50px auto;
     margin-top: 50px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
-    padding: 20px;
-   /* background: #ccc;*/
     background: rgba(33.3,33.3,33.3, 0.5);
     color: #fff;
 }
@@ -100,7 +98,7 @@ main {
 }
 .btn-entry{
     margin: 0 auto;
-    width: 85%;
+    width: 80%;
 }
 #new-entry-btn{
     background: rgba(72,177,191,0.5);  /*royal blue */
@@ -123,4 +121,84 @@ main {
         width: 65%;
         
     }
+}
+
+
+/** List entry styles**/
+/*box-sizing affects other pages but added because of the list-entry page grid*/
+* {
+  box-sizing: border-box;
+}
+#grid-box{
+    padding: 20px;
+    width: 85%;
+    margin: 50px auto;
+    margin-top: 50px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+    background: rgba(33.3,33.3,33.3, 0.5);
+    color: #1f1f1f;
+}
+.entry-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+.entry-grid .item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  flex: 1 1 calc(33.33% - 20px);
+  margin: 10px;
+  padding: 25px;
+  padding-bottom: 20px;
+  background: rgb(220,211,178);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+      0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.entry-grid .item:hover {
+    box-shadow: 0 2px 4px rgba(220,211,178, 0.1),
+      0 4px 12px rgba(220,211,178, 0.1);
+}
+.entry-grid .item .title {
+    font-size: 1.5rem;
+}
+.entry-grid .item .meta {
+  color: #555;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.entry-grid .item .meta .avatar {
+  width: 50px;
+  height: 50px;
+  margin: 20px;
+}
+
+[entry-letter]:before {
+  content:attr(entry-letter);
+  display:inline-block;
+  font-size:1em;
+  width:3.5em;
+  height:3.5em;
+  line-height:3.5em;
+  text-align:center;
+  border-radius:50%;
+  background:plum;
+  vertical-align:middle;
+  margin-right:1em;
+  color:white;
+  }
+
+@media(max-width: 740px) {
+  .entry-grid .item {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+@media(max-width: 480px) {
+  .entry-grid .item {
+    flex: 1 1 calc(100% - 20px);
+  }
 }

@@ -156,12 +156,14 @@ main {
   background: rgb(220,211,178);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
       0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
 }
 .entry-grid .item:hover {
     box-shadow: 0 2px 4px rgba(220,211,178, 0.1),
       0 4px 12px rgba(220,211,178, 0.1);
 }
 .entry-grid .item .title {
+    text-align: center;
     font-size: 1.5rem;
 }
 .entry-grid .item .meta {

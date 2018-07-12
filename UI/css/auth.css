@@ -37,7 +37,8 @@ main {
    /* background: #ccc;*/
     background: rgba(33.3,33.3,33.3, 0.5);
     color: #fff;
-        border: 1px solid #7F7FD5;
+    border: 1px solid #7F7FD5;
+    margin-bottom: 20px;
 }
 .login-box h1 {
     align-content: flex-start;

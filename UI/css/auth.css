@@ -36,6 +36,21 @@ nav a {
 nav a:hover{
     color: #FAEDB8;
 }
+nav a.nav-item{
+    font-size: 1rem;
+    border: 1px solid #fff;
+    padding: 8px 10px;
+}
+nav a.nav-item#login{
+    font-size: 1rem;
+    color: black;
+    background-color: #FAEDB8;
+}
+nav a.nav-item#login:hover{
+    background-color: transparent;
+    color: #FAEDB8;
+}
+
 .nav-links .btn {
     padding: 0.5rem;
     color: #ffffff;

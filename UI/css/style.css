@@ -11,10 +11,16 @@ h1 {
     font-size: 2.5rem;
 }
 
-#landing-text h1 {
+#landing-text h1{
     font-family: 'Roboto Slab', sans-serif;
-    color: #FAEDB8;
     text-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+}
+#landing-text h1 a {
+    color: #FAEDB8;
+    text-decoration: none
+}
+#landing-text h1 a:hover{
+    opacity: 0.9;
 }
 
 h2 {

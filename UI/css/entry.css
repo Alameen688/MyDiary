@@ -338,7 +338,7 @@ h3 {
   box-shadow: 0px 2px 5px #666;
 }
 
-.edit{
+.fab-icon{
   position: absolute;
   top: 0;
   display: block;
@@ -353,10 +353,3 @@ h3 {
   animation: edit-out 0.3s;
 }
 
-/** Screen sizes 400px and up **/
-@media(min-width: 400px) {
-    /** edit icon beside entry-title only displays on screen below 400px**/
-    #entry-title .fa-edit{
-        display: none;
-    }
-}

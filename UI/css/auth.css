@@ -136,7 +136,6 @@ main {
 }
 .link a:hover{
     text-decoration: underline;
-    
 }
 /** Screen sizes 400px and up **/
 @media(min-width: 400px) {

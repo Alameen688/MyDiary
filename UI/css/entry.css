@@ -136,6 +136,46 @@ main {
     background: rgba(33.3,33.3,33.3, 0.5);
     color: #1f1f1f;
 }
+#grid-actions{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+#grid-actions form{
+    min-width: 180px;
+}
+#grid-actions #search{
+    font-family: 'Roboto Slab', sans-serif;
+    width: 70%;
+    margin-bottom: 10px;
+    padding: 10px 9px;
+    font-size: 0.8rem;
+    background: #fff;
+    border: 1px solid transparent;
+    color: #666;
+    border-radius: 3px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -o-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+#grid-actions #search-btn{
+    padding: 8px 10px;
+    text-shadow: none;
+    outline: 0;
+    border-radius: 3px;
+    border: 3px solid transparent;
+    color: white;
+    background: #47cf73;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    text-align: center;
+    font-weight: normal;
+}
 .entry-grid {
   display: flex;
   flex-wrap: wrap;
@@ -198,6 +238,11 @@ a.item {
   font-weight: bold;
 }
 
+@media(min-width: 550px){
+    #grid-actions form{
+      min-width: 350px;
+    }
+}
 @media(max-width: 740px) {
   .entry-grid .item {
     flex: 1 1 calc(50% - 20px);

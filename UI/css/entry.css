@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Slab|Titillium+Web|Lato');
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-/** Login Styles **/
 body{
     font-family: 'Titillium Web', sans-serif;
     margin: 0;
@@ -8,16 +7,53 @@ body{
     height: auto;
     background: #323232;
 }
-header {
-    padding: 5px 10px;
-}
-header #site-name{
+header #site-name a{
     font-family: 'Lato', sans-serif;
     font-weight: 400;
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #FAEDB8;
     text-shadow: 2px 2px 1px rgba(0,0,0,0.5);
 }
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: rgba(33.3,33.3,33.3);
+    padding: 0.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+nav a {
+    text-decoration: none;
+    color: #fff;
+}
+.nav-links .btn {
+    padding: 0.5rem;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-size: 1rem;
+    background-color: #3359DF;
+}
+.nav-links img#user-icon{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 2px solid #ccc;
+}
+/**
+.fixed-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+}
+*/
 main {
     margin: auto;
     box-shadow: 30px 0px 40px rgba(0,0,0,0.2), 
@@ -136,6 +172,46 @@ main {
     background: rgba(33.3,33.3,33.3, 0.5);
     color: #1f1f1f;
 }
+#grid-actions{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+#grid-actions form{
+    min-width: 180px;
+}
+#grid-actions #search{
+    font-family: 'Roboto Slab', sans-serif;
+    width: 70%;
+    margin-bottom: 10px;
+    padding: 10px 9px;
+    font-size: 0.8rem;
+    background: #fff;
+    border: 1px solid transparent;
+    color: #666;
+    border-radius: 3px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -o-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+#grid-actions #search-btn{
+    padding: 8px 10px;
+    text-shadow: none;
+    outline: 0;
+    border-radius: 3px;
+    border: 3px solid transparent;
+    color: white;
+    background: #47cf73;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    text-align: center;
+    font-weight: normal;
+}
 .entry-grid {
   display: flex;
   flex-wrap: wrap;
@@ -198,6 +274,11 @@ a.item {
   font-weight: bold;
 }
 
+@media(min-width: 550px){
+    #grid-actions form{
+      min-width: 350px;
+    }
+}
 @media(max-width: 740px) {
   .entry-grid .item {
     flex: 1 1 calc(50% - 20px);
@@ -293,7 +374,7 @@ h3 {
   box-shadow: 0px 2px 5px #666;
 }
 
-.edit{
+.fab-icon{
   position: absolute;
   top: 0;
   display: block;

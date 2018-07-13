@@ -9,15 +9,49 @@ body{
     background: #323232;
 }
 header {
-    padding: 5px 10px;
     margin-bottom: 40px;
 }
-header #site-name{
+header #site-name a{
     font-family: 'Lato', sans-serif;
     font-weight: 400;
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #FAEDB8;
     text-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: rgba(33.3,33.3,33.3);
+    padding: 0.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+nav a {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 8px;
+}
+nav a:hover{
+    color: #FAEDB8;
+}
+.nav-links .btn {
+    padding: 0.5rem;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-size: 1rem;
+    background-color: #3359DF;
+}
+.nav-links img#user-icon{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 2px solid #ccc;
 }
 main {
     margin: 0;
@@ -126,6 +160,16 @@ main {
     background: #8360c3; 
     background: -webkit-linear-gradient(to right, #2ebf91, #8360c3); 
     background: linear-gradient(to right, #2ebf91, #8360c3);
+}
+.link{
+    font-weight: bold;
+}
+.link a{
+    color: #7F7FD5;
+    text-decoration: none;
+}
+.link a:hover{
+    text-decoration: underline;
 }
 /** Screen sizes 400px and up **/
 @media(min-width: 400px) {

@@ -9,7 +9,12 @@
 </head>
 <body>
     <header>
-        <div id="site-name">MyDiary</div>
+       <nav>
+        <div id="site-name"><a href="index.html">MyDiary</a></div>
+        <div class="nav-links">
+            <a href="profile.html"><img id="user-icon" src="images/avatar.jpg"/></a>
+        </div>
+        </nav>
     </header>
     <main>
         <div id="entry-content-box">
@@ -29,18 +34,17 @@
                 <button class="del-btn">Delete</button>
             </div>
         </div>
+        
+        <div id="floating-button">
+        <a href="edit-entry.html">
+            <img class="fab-icon" src="images/edit-icon.png">
+        </a>
+      </div>
     </main>
     <footer>
         
     </footer>
     
-   
-
-      <div id="floating-button">
-        <a href="edit-entry.html">
-            <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
-        </a>
-      </div>
 
 </body>
 </html>

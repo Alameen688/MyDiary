@@ -9,7 +9,13 @@
 </head>
 <body>
     <header>
-        <div id="site-name">MyDiary</div>
+       <nav>
+        <div id="site-name"><a href="index.html">MyDiary</a></div>
+        <div class="nav-links">
+                <a class="nav-item" href="signup.html">Register</a>
+                <a class="nav-item" href="login.html">Login</a>
+        </div>
+        </nav>
     </header>
     <main>
         <div class="login-box">
@@ -23,8 +29,10 @@
                     <i class="fa fa-lock" aria-hidden="true"></i>
                     <input type="password" placeholder="Password" name="password" id="">
                 </div>
-
                 <input type="submit" value="Log in" class="form-btn btn-login">
+                <div class="link">
+                    <p>New user? <a href="signup.html">Sign Up</a></p>
+                </div>
             </form>
         </div>
         

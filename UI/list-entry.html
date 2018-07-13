@@ -9,10 +9,21 @@
 </head>
 <body>
     <header>
-        <div id="site-name">MyDiary</div>
+       <nav>
+        <div id="site-name"><a href="index.html">MyDiary</a></div>
+        <div class="nav-links">
+            <a href="profile.html"><img id="user-icon" src="images/avatar.jpg"/></a>
+        </div>
+        </nav>
     </header>
     <main>
         <div id="grid-box">
+         <div id="grid-actions">
+             <form action="">
+                 <input type="search" name="search" placeholder="search for an entry" id="search">
+                 <input type="submit" id="search-btn" value="Search">
+             </form>
+         </div>
           <div class="entry-grid">
            
            <a class="item" href="">
@@ -135,6 +146,12 @@
           <!-- end .entry-grid-->
         </div>
         <!-- end #grid-entry-->
+        
+        <div id="floating-button">
+        <a href="add-entry.html">
+            <img class="fab-icon" src="images/plus.png">
+        </a>
+      </div>
     </main>
     <footer>
         

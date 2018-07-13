@@ -1,6 +1,6 @@
-/** Login Styles **/
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Slab|Titillium+Web|Lato');
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+/** Login Styles **/
 body{
     font-family: 'Titillium Web', sans-serif;
     margin: 0;
@@ -48,7 +48,6 @@ main {
     font-family: 'Roboto Slab', sans-serif;
     display: block;
     width: 80%;
-    flex: 0 1 10vw;
     margin: 0 auto;
     margin-bottom: 30px;
     padding: 10px 9px;

@@ -10,12 +10,47 @@ body{
 header {
     min-height: 100px;
 }
-header #site-name{
+header #site-name a{
     font-family: 'Lato', sans-serif;
     font-weight: 400;
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #FAEDB8;
     text-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: rgba(33.3,33.3,33.3);
+    padding: 0.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+nav a {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 8px;
+}
+nav a:hover{
+    color: #FAEDB8;
+}
+.nav-links .btn {
+    padding: 0.5rem;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-size: 1rem;
+    background-color: #3359DF;
+}
+.nav-links img#user-icon{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 2px solid #ccc;
 }
 header #cover-area{
     height: 25%;

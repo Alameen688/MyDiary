@@ -51,6 +51,15 @@ main {
 #cover-area h1{
     font-size: 2.0rem;
 }
+#cover-area .entries-count{
+    text-shadow: 1px 4px 2px rgba(0,0,0,0.5);
+    font-size: 1.1rem;
+}
+#cover-area .entries-count .no{
+    font-size: 1.6rem;
+    color: #ddd;
+    text-shadow: 1px 4px 2px rgba(0,0,0,0.5);
+}
 #cover-area #fav-quote{
     color: #333;
     font-size: 1.1rem;

@@ -127,6 +127,17 @@ main {
     background: -webkit-linear-gradient(to right, #2ebf91, #8360c3); 
     background: linear-gradient(to right, #2ebf91, #8360c3);
 }
+.link{
+    font-weight: bold;
+}
+.link a{
+    color: #7F7FD5;
+    text-decoration: none;
+}
+.link a:hover{
+    text-decoration: underline;
+    
+}
 /** Screen sizes 400px and up **/
 @media(min-width: 400px) {
     .textbox input {

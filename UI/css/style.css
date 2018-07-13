@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Slab|Titillium+Web');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Slab|Titillium+Web|Lato');
 body{
     font-family: 'Roboto Slab', sans-serif;
     margin: 0;
@@ -12,8 +12,7 @@ h1 {
 }
 
 #landing-text h1 {
-    font-family: 'Lato', sans-serif;
-    text-transform: uppercase;
+    font-family: 'Roboto Slab', sans-serif;
     color: #FAEDB8;
     text-shadow: 2px 2px 1px rgba(0,0,0,0.5);
 }

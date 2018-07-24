@@ -1,0 +1,49 @@
+{
+  "name": "oxygen",
+  "version": "1.0.0",
+  "description": "Server side app that provides mydiary ui client with data",
+  "engines": {
+    "node": "8.9.4"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "babel-node node_modules/mocha/bin/_mocha test/*.js",
+    "pretest": "eslint .",
+    "lintfix": "eslint . --fix",
+    "build": "npm run lintfix && babel src -d dist",
+    "cover": "babel-node ./node_modules/istanbul/lib/cli cover --hook-run-in-context node_modules/mocha/bin/_mocha -- -R spec --timeout 10000 test/*.js",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "dev": "nodemon ./dist/server",
+    "start": "node ./dist/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alameen688/oxygen.git"
+  },
+  "author": "Ogundiran Al-Ameen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alameen688/oxygen/issues"
+  },
+  "homepage": "https://github.com/Alameen688/oxygen#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "express": "^4.16.3",
+    "express-validation": "^1.0.2",
+    "joi": "^13.4.0",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "coveralls": "^3.0.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.2"
+  }
+}

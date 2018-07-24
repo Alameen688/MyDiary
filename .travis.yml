@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "stable"
+sudo: false # makes tests faster
+install:
+  - npm install
+script: npm run pretest
+after_success:
+  - npm run coveralls
+cache:
+  directories:
+    - "node_modules"

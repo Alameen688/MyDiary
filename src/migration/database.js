@@ -2,15 +2,18 @@ import dotenv from 'dotenv';
 import { Client } from 'pg';
 
 dotenv.config();
-const client = new Client();
+const connectionString = process.env.DATABASE_URL;
+const client = new Client({
+  connectionString,
+});
 client.connect((err) => {
   if (err) {
     console.log(err.message);
   }
 });
 
-const userTableQuery = 'CREATE TABLE users(id SERIAL PRIMARY KEY, fullname VARCHAR(255) not null, email VARCHAR(225) UNIQUE not null, password TEXT not null, created_at DATE not null, updated_at DATE not null)';
-const entriesTableQuery = 'CREATE TABLE entries(id SERIAL PRIMARY KEY, user_id INTEGER not null, title TEXT not null, content TEXT not null, created_at DATE not null, updated_at DATE not null)';
+const userTableQuery = 'CREATE TABLE users(id SERIAL PRIMARY KEY, fullname VARCHAR(255) NOT NULL, email VARCHAR(225) UNIQUE NOT NULL, password TEXT NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW())';
+const entriesTableQuery = 'CREATE TABLE entries(id SERIAL PRIMARY KEY, user_id INTEGER NOT NULL, title TEXT NOT NULL, content TEXT NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW())';
 
 const tableQuery = `${userTableQuery} ; ${entriesTableQuery}`;
 client.query(tableQuery, (error) => {

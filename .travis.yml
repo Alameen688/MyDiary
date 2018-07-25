@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - "stable"
+env: 
+  global: 
+    - JWT_AUTH_TOKEN_TEST=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaGlyaUBwaW9jb2RlLmNvbSIsImZ1bGxuYW1lIjoiSXlhbnUgYXNoaXJpIiwiaWF0IjoxNTMyNTE2Nzg0LCJleHAiOjE1MzI2ODk1ODR9.AXRdGz578vG2yJWu5wTT1y0oJjjYhtz63SZ9s_2qYCg
 sudo: false # makes tests faster
 install:
   - npm install

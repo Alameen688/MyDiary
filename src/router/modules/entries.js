@@ -8,7 +8,7 @@ const router = express.Router();
 const entry = new EntryController();
 
 // get all entries
-router.get('/', (req, res) => {
+router.get('/', auth.isValid, (req, res) => {
   entry.getAll(req, res);
 });
 

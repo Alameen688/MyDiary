@@ -26,7 +26,7 @@ var router = _express2.default.Router();
 var entry = new _entryController2.default();
 
 // get all entries
-router.get('/', function (req, res) {
+router.get('/', _auth2.default.isValid, function (req, res) {
   entry.getAll(req, res);
 });
 

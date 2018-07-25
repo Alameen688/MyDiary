@@ -1,6 +1,7 @@
 /* eslint no-underscore-dangle: 0 */
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { Client } from 'pg';
 
 dotenv.config();
@@ -38,6 +39,52 @@ class UserController {
       })
       .catch((err) => {
         next(err);
+      });
+  }
+
+  login(req, res, next) {
+    const { email, password } = req.body;
+    this._client.query('SELECT id, fullname, email, password FROM users WHERE email=($1)', [email])
+      .then((result) => {
+        if (result.rowCount > 0) {
+          const data = result.rows[0];
+          bcrypt.compare(password, data.password)
+            .then((val) => {
+              if (val) {
+                const token = jwt.sign(
+                  {
+                    email: data.email,
+                    fullname: data.fullname,
+                  },
+                  process.env.JWT_KEY,
+                  {
+                    expiresIn: process.env.JWT_EXPIRY,
+                  },
+                );
+                delete data.password;
+                data.token = token;
+                res.status(200)
+                  .json({
+                    status: 'success',
+                    data,
+                  });
+              } else {
+                const error = new Error('Credentials do not match any record');
+                error.status = 401;
+                next(error);
+              }
+            })
+            .catch((err) => {
+              next(err);
+            });
+        } else {
+          const error = new Error('Credentials do not match any record');
+          error.status = 401;
+          next(error);
+        }
+      })
+      .catch((e) => {
+        next(e);
       });
   }
 }

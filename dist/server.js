@@ -41,6 +41,7 @@ app.all('/*', function (req, res, next) {
 });
 
 app.use('/api/v1/entries', _index2.default.entries);
+app.use('/api/v1/users', _index2.default.users);
 
 // when there is no fitting route set error and run the next func
 app.use(function (req, res, next) {

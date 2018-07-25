@@ -2,8 +2,19 @@ language: node_js
 node_js:
   - "stable"
 sudo: false # makes tests faster
+services: postgresql
+postgres:
+  adapter: postgresql
+  database: mydiarydb_test
+  username: postgres
+env:
+  global:
+    - PGPORT=5432
+    - DATABASE_URL=<%= ENV.fetch('DATABASE_URL', 'postgresql://localhost:5432/mydiarydb_test') %>
 install:
   - npm install
+before_sript:
+  - npm run migrate
 script: npm run pretest
 after_success:
   - npm run coveralls

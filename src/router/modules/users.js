@@ -12,5 +12,9 @@ router.post('/signup', validate(Validation.User.signup), (req, res, next) => {
   user.create(req, res, next);
 });
 
+// login user
+router.post('/login', validate(Validation.User.login), (req, res, next) => {
+  user.login(req, res, next);
+});
 
 module.exports = router;

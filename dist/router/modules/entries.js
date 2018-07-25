@@ -16,6 +16,10 @@ var _index = require('../../middleware/validation/index');
 
 var _index2 = _interopRequireDefault(_index);
 
+var _auth = require('../../middleware/authorization/auth');
+
+var _auth2 = _interopRequireDefault(_auth);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = _express2.default.Router();
@@ -27,22 +31,22 @@ router.get('/', function (req, res) {
 });
 
 // add a new entry
-router.post('/', (0, _expressValidation2.default)(_index2.default.Entry.create), function (req, res) {
+router.post('/', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.create)], function (req, res) {
   entry.create(req, res);
 });
 
 // get entry by id
-router.get('/:id', (0, _expressValidation2.default)(_index2.default.Entry.getById), function (req, res) {
+router.get('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.getById)], function (req, res) {
   entry.getById(req, res);
 });
 
 // update entry
-router.put('/:id', (0, _expressValidation2.default)(_index2.default.Entry.update), function (req, res) {
+router.put('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.update)], function (req, res) {
   entry.update(req, res);
 });
 
 // delete entry
-router.delete('/:id', (0, _expressValidation2.default)(_index2.default.Entry.delete), function (req, res) {
+router.delete('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.delete)], function (req, res) {
   entry.delete(req, res);
 });
 

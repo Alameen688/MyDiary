@@ -23,8 +23,8 @@ router.get('/:id', [auth.isValid, validate(Validation.Entry.getById)], (req, res
 });
 
 // update entry
-router.put('/:id', [auth.isValid, validate(Validation.Entry.update)], (req, res) => {
-  entry.update(req, res);
+router.put('/:id', [auth.isValid, validate(Validation.Entry.update)], (req, res, next) => {
+  entry.update(req, res, next);
 });
 
 // delete entry

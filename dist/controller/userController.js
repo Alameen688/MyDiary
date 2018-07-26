@@ -71,6 +71,7 @@ var UserController = function () {
           _bcrypt2.default.compare(password, data.password).then(function (val) {
             if (val) {
               var token = _jsonwebtoken2.default.sign({
+                id: data.id,
                 email: data.email,
                 fullname: data.fullname
               }, process.env.JWT_KEY, {

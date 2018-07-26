@@ -41,8 +41,8 @@ router.get('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_in
 });
 
 // update entry
-router.put('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.update)], function (req, res) {
-  entry.update(req, res);
+router.put('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.update)], function (req, res, next) {
+  entry.update(req, res, next);
 });
 
 // delete entry

@@ -18,8 +18,8 @@ router.post('/', [auth.isValid, validate(Validation.Entry.create)], (req, res, n
 });
 
 // get entry by id
-router.get('/:id', [auth.isValid, validate(Validation.Entry.getById)], (req, res) => {
-  entry.getById(req, res);
+router.get('/:id', [auth.isValid, validate(Validation.Entry.getById)], (req, res, next) => {
+  entry.getById(req, res, next);
 });
 
 // update entry

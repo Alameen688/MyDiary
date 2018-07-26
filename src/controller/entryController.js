@@ -40,16 +40,29 @@ class EntryController extends ClientController {
       });
   }
 
-  getById(req, res) {
+  getById(req, res, next) {
     // using obj destructring
     const { id } = req.params;
-    const result = this._entry.findEntry(id);
-    res.status(200)
-      .json({
-        status: 'success',
-        data: result,
+
+    this._client.query('SELECT * FROM entries WHERE id=($1) AND user_id=($2)', [id, req.userData.id])
+      .then((result) => {
+        if (result.rowCount > 0) {
+          res.status(200)
+            .json({
+              status: 'success',
+              data: result.rows[0],
+            });
+        } else {
+          const error = new Error("Entry doesn't exist");
+          error.status = 404;
+          next(error);
+        }
+      })
+      .catch((e) => {
+        next(e);
       });
   }
+
 
   update(req, res) {
     const { id } = req.params;

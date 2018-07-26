@@ -36,8 +36,8 @@ router.post('/', [_auth2.default.isValid, (0, _expressValidation2.default)(_inde
 });
 
 // get entry by id
-router.get('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.getById)], function (req, res) {
-  entry.getById(req, res);
+router.get('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.getById)], function (req, res, next) {
+  entry.getById(req, res, next);
 });
 
 // update entry

@@ -61,14 +61,24 @@ var EntryController = function (_ClientController) {
     }
   }, {
     key: 'getById',
-    value: function getById(req, res) {
+    value: function getById(req, res, next) {
       // using obj destructring
       var id = req.params.id;
 
-      var result = this._entry.findEntry(id);
-      res.status(200).json({
-        status: 'success',
-        data: result
+
+      this._client.query('SELECT * FROM entries WHERE id=($1) AND user_id=($2)', [id, req.userData.id]).then(function (result) {
+        if (result.rowCount > 0) {
+          res.status(200).json({
+            status: 'success',
+            data: result.rows[0]
+          });
+        } else {
+          var error = new Error("Entry doesn't exist");
+          error.status = 404;
+          next(error);
+        }
+      }).catch(function (e) {
+        next(e);
       });
     }
   }, {

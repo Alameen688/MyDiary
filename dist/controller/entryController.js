@@ -2,10 +2,6 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _entryHandler = require('../handler/entryHandler');
-
-var _entryHandler2 = _interopRequireDefault(_entryHandler);
-
 var _clientController = require('./clientController');
 
 var _clientController2 = _interopRequireDefault(_clientController);
@@ -25,10 +21,7 @@ var EntryController = function (_ClientController) {
   function EntryController() {
     _classCallCheck(this, EntryController);
 
-    var _this = _possibleConstructorReturn(this, (EntryController.__proto__ || Object.getPrototypeOf(EntryController)).call(this));
-
-    _this._entry = new _entryHandler2.default();
-    return _this;
+    return _possibleConstructorReturn(this, (EntryController.__proto__ || Object.getPrototypeOf(EntryController)).apply(this, arguments));
   }
 
   _createClass(EntryController, [{
@@ -131,24 +124,23 @@ var EntryController = function (_ClientController) {
     }
   }, {
     key: 'delete',
-    value: function _delete(req, res) {
+    value: function _delete(req, res, next) {
       var id = req.params.id;
 
-      var result = this._entry.deleteEntry(id);
-      // if item was deleted successully, it will return undefined
-      if (result !== null && result === undefined) {
-        res.status(200).json({
-          status: 'success',
-          data: {}
-        });
-      } else {
-        // has error property to match the pattern of validation error response
-        res.status(404).json({
-          status: 'error',
-          message: 'Unable to delete entry',
-          errors: ["entry with id doesn't exist"]
-        });
-      }
+      this._client.query('DELETE FROM entries WHERE id=($1) AND user_id=($2)', [id, req.userData.id]).then(function (result) {
+        if (result.rowCount > 0) {
+          res.status(204).json({
+            status: 'success',
+            data: result.rows
+          });
+        } else {
+          var error = new Error("Entry doesn't exist");
+          error.status = 404;
+          next(error);
+        }
+      }).catch(function (e) {
+        next(e);
+      });
     }
   }]);
 

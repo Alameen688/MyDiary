@@ -28,8 +28,8 @@ router.put('/:id', [auth.isValid, validate(Validation.Entry.update)], (req, res,
 });
 
 // delete entry
-router.delete('/:id', [auth.isValid, validate(Validation.Entry.delete)], (req, res) => {
-  entry.delete(req, res);
+router.delete('/:id', [auth.isValid, validate(Validation.Entry.delete)], (req, res, next) => {
+  entry.delete(req, res, next);
 });
 
 

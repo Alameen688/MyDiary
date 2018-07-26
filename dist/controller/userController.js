@@ -1,7 +1,6 @@
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /* eslint no-underscore-dangle: 0 */
-
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dotenv = require('dotenv');
 
@@ -15,29 +14,34 @@ var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
-var _pg = require('pg');
+var _clientController = require('./clientController');
+
+var _clientController2 = _interopRequireDefault(_clientController);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint no-underscore-dangle: 0 */
+
+
 _dotenv2.default.config();
 
-var UserController = function () {
+var UserController = function (_ClientController) {
+  _inherits(UserController, _ClientController);
+
   function UserController() {
     _classCallCheck(this, UserController);
 
-    this._connectionString = process.env.DATABASE_URL;
-    this._client = new _pg.Client({
-      connectionString: this._connectionString
-    });
-    this._client.connect();
+    return _possibleConstructorReturn(this, (UserController.__proto__ || Object.getPrototypeOf(UserController)).apply(this, arguments));
   }
 
   _createClass(UserController, [{
     key: 'create',
     value: function create(req, res, next) {
-      var _this = this;
+      var _this2 = this;
 
       _bcrypt2.default.hash(req.body.password, 10).then(function (hash) {
         var action = 'INSERT INTO users(fullname, email, password, created_at, updated_at)\n          VALUES($1, $2, $3, $4, $5) RETURNING fullname, email, created_at, updated_at';
@@ -46,7 +50,7 @@ var UserController = function () {
           text: action,
           values: values
         };
-        _this._client.query(query).then(function (result) {
+        _this2._client.query(query).then(function (result) {
           res.status(201).json({
             status: 'success',
             data: result.rows[0]
@@ -103,6 +107,6 @@ var UserController = function () {
   }]);
 
   return UserController;
-}();
+}(_clientController2.default);
 
 module.exports = UserController;

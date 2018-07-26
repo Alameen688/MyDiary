@@ -52,10 +52,11 @@ var EntryController = function (_ClientController) {
   }, {
     key: 'getAll',
     value: function getAll(req, res) {
-      var result = this._entry.getAllEntry();
-      res.status(200).json({
-        status: 'success',
-        data: result
+      this._client.query('SELECT * FROM entries WHERE user_id=($1) ORDER BY id DESC', [req.userData.id]).then(function (result) {
+        res.status(200).json({
+          status: 'success',
+          data: result.rows || []
+        });
       });
     }
   }, {

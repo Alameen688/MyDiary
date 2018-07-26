@@ -30,11 +30,13 @@ class EntryController extends ClientController {
   }
 
   getAll(req, res) {
-    const result = this._entry.getAllEntry();
-    res.status(200)
-      .json({
-        status: 'success',
-        data: result,
+    this._client.query('SELECT * FROM entries WHERE user_id=($1) ORDER BY id DESC', [req.userData.id])
+      .then((result) => {
+        res.status(200)
+          .json({
+            status: 'success',
+            data: result.rows || [],
+          });
       });
   }
 

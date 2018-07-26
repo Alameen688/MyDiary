@@ -22,13 +22,13 @@ Entry.create = {
 
 Entry.getById = {
   params: {
-    id: _joi2.default.string().max(16).required()
+    id: _joi2.default.number().required()
   }
 };
 
 Entry.update = {
   params: {
-    id: _joi2.default.string().max(16).required()
+    id: _joi2.default.number().required()
   },
   body: {
     title: _joi2.default.string().required(),
@@ -38,7 +38,7 @@ Entry.update = {
 
 Entry.delete = {
   params: {
-    id: _joi2.default.string().max(16).required()
+    id: _joi2.default.number().required()
   }
 };
 

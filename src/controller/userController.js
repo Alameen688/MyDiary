@@ -2,19 +2,11 @@
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { Client } from 'pg';
+import ClientController from './clientController';
 
 dotenv.config();
 
-class UserController {
-  constructor() {
-    this._connectionString = process.env.DATABASE_URL;
-    this._client = new Client({
-      connectionString: this._connectionString,
-    });
-    this._client.connect();
-  }
-
+class UserController extends ClientController {
   create(req, res, next) {
     bcrypt.hash(req.body.password, 10)
       .then((hash) => {

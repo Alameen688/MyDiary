@@ -1,13 +1,7 @@
 /* eslint no-underscore-dangle: 0 */
-import EntryHandler from '../handler/entryHandler';
 import ClientController from './clientController';
 
 class EntryController extends ClientController {
-  constructor() {
-    super();
-    this._entry = new EntryHandler();
-  }
-
   create(req, res, next) {
     const action = `INSERT INTO entries(title, content, user_id, created_at, updated_at)
       VALUES($1, $2, $3, $4, $5) RETURNING title, content, created_at, updated_at `;
@@ -123,27 +117,25 @@ class EntryController extends ClientController {
   }
 
 
-  delete(req, res) {
+  delete(req, res, next) {
     const { id } = req.params;
-    const result = this._entry.deleteEntry(id);
-    // if item was deleted successully, it will return undefined
-    if (result !== null && result === undefined) {
-      res.status(200)
-        .json({
-          status: 'success',
-          data: {},
-        });
-    } else {
-      // has error property to match the pattern of validation error response
-      res.status(404)
-        .json({
-          status: 'error',
-          message: 'Unable to delete entry',
-          errors: [
-            "entry with id doesn't exist",
-          ],
-        });
-    }
+    this._client.query('DELETE FROM entries WHERE id=($1) AND user_id=($2)', [id, req.userData.id])
+      .then((result) => {
+        if (result.rowCount > 0) {
+          res.status(204)
+            .json({
+              status: 'success',
+              data: result.rows,
+            });
+        } else {
+          const error = new Error("Entry doesn't exist");
+          error.status = 404;
+          next(error);
+        }
+      })
+      .catch((e) => {
+        next(e);
+      });
   }
 }
 

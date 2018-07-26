@@ -46,8 +46,8 @@ router.put('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_in
 });
 
 // delete entry
-router.delete('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.delete)], function (req, res) {
-  entry.delete(req, res);
+router.delete('/:id', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.delete)], function (req, res, next) {
+  entry.delete(req, res, next);
 });
 
 module.exports = router;

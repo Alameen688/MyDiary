@@ -13,8 +13,8 @@ router.get('/', auth.isValid, (req, res) => {
 });
 
 // add a new entry
-router.post('/', [auth.isValid, validate(Validation.Entry.create)], (req, res) => {
-  entry.create(req, res);
+router.post('/', [auth.isValid, validate(Validation.Entry.create)], (req, res, next) => {
+  entry.create(req, res, next);
 });
 
 // get entry by id

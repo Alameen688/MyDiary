@@ -31,8 +31,8 @@ router.get('/', _auth2.default.isValid, function (req, res) {
 });
 
 // add a new entry
-router.post('/', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.create)], function (req, res) {
-  entry.create(req, res);
+router.post('/', [_auth2.default.isValid, (0, _expressValidation2.default)(_index2.default.Entry.create)], function (req, res, next) {
+  entry.create(req, res, next);
 });
 
 // get entry by id

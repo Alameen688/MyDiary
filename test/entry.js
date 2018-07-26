@@ -41,7 +41,7 @@ describe('/POST entries', () => {
       .send(newEntry)
       .end((err, res) => {
         id = res.body.data.id;
-        res.should.have.status(200);
+        res.should.have.status(201);
         res.body.data.should.be.a('object');
         done();
       });

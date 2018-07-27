@@ -27,7 +27,7 @@ var EntryController = function (_ClientController) {
   _createClass(EntryController, [{
     key: 'create',
     value: function create(req, res, next) {
-      var action = 'INSERT INTO entries(title, content, user_id, created_at, updated_at)\n      VALUES($1, $2, $3, $4, $5) RETURNING title, content, created_at, updated_at ';
+      var action = 'INSERT INTO entries(title, content, user_id, created_at, updated_at)\n      VALUES($1, $2, $3, $4, $5) RETURNING id, title, content, created_at, updated_at ';
       var values = [req.body.title, req.body.content, req.userData.id, 'NOW()', 'NOW()'];
       var query = {
         text: action,
@@ -129,7 +129,7 @@ var EntryController = function (_ClientController) {
 
       this._client.query('DELETE FROM entries WHERE id=($1) AND user_id=($2)', [id, req.userData.id]).then(function (result) {
         if (result.rowCount > 0) {
-          res.status(204);
+          res.status(204).json({});
         } else {
           var error = new Error("Entry doesn't exist");
           error.status = 404;

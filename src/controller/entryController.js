@@ -4,7 +4,7 @@ import ClientController from './clientController';
 class EntryController extends ClientController {
   create(req, res, next) {
     const action = `INSERT INTO entries(title, content, user_id, created_at, updated_at)
-      VALUES($1, $2, $3, $4, $5) RETURNING title, content, created_at, updated_at `;
+      VALUES($1, $2, $3, $4, $5) RETURNING id, title, content, created_at, updated_at `;
     const values = [req.body.title, req.body.content, req.userData.id, 'NOW()', 'NOW()'];
     const query = {
       text: action,
@@ -122,7 +122,8 @@ class EntryController extends ClientController {
     this._client.query('DELETE FROM entries WHERE id=($1) AND user_id=($2)', [id, req.userData.id])
       .then((result) => {
         if (result.rowCount > 0) {
-          res.status(204);
+          res.status(204)
+            .json({});
         } else {
           const error = new Error("Entry doesn't exist");
           error.status = 404;

@@ -1,7 +1,9 @@
 import express from 'express';
 import expressValidation from 'express-validation';
+import swaggerUi from 'swagger-ui-express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import swaggerDoc from '../swagger.json';
 import router from './router/index';
 
 const app = express();
@@ -24,6 +26,7 @@ app.all('/*', (req, res, next) => {
 
 app.use('/api/v1/entries', router.entries);
 app.use('/api/v1/auth', router.users);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // when there is no fitting route set error and run the next func
 app.use((req, res, next) => {

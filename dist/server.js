@@ -8,6 +8,10 @@ var _expressValidation = require('express-validation');
 
 var _expressValidation2 = _interopRequireDefault(_expressValidation);
 
+var _swaggerUiExpress = require('swagger-ui-express');
+
+var _swaggerUiExpress2 = _interopRequireDefault(_swaggerUiExpress);
+
 var _morgan = require('morgan');
 
 var _morgan2 = _interopRequireDefault(_morgan);
@@ -15,6 +19,10 @@ var _morgan2 = _interopRequireDefault(_morgan);
 var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
+
+var _swagger = require('../swagger.json');
+
+var _swagger2 = _interopRequireDefault(_swagger);
 
 var _index = require('./router/index');
 
@@ -42,6 +50,7 @@ app.all('/*', function (req, res, next) {
 
 app.use('/api/v1/entries', _index2.default.entries);
 app.use('/api/v1/auth', _index2.default.users);
+app.use('/api-docs', _swaggerUiExpress2.default.serve, _swaggerUiExpress2.default.setup(_swagger2.default));
 
 // when there is no fitting route set error and run the next func
 app.use(function (req, res, next) {

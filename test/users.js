@@ -11,7 +11,7 @@ import server from '../dist/server';
 const should = chai.should();
 
 chai.use(chaiHttp);
-let randNum = Math.floor(Math.random * 125);
+let randNum = Math.floor(Math.random() * 125);
 let newUser = {
   fullname: 'Tester Testing',
   email: `test${randNum}@example.com`,

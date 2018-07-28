@@ -3,9 +3,10 @@ import ClientController from './clientController';
 
 class EntryController extends ClientController {
   create(req, res, next) {
+    const { title, content } = req.body;
     const action = `INSERT INTO entries(title, content, user_id, created_at, updated_at)
       VALUES($1, $2, $3, $4, $5) RETURNING id, title, content, created_at, updated_at `;
-    const values = [req.body.title, req.body.content, req.userData.id, 'NOW()', 'NOW()'];
+    const values = [title, content, req.userData.id, 'NOW()', 'NOW()'];
     const query = {
       text: action,
       values,

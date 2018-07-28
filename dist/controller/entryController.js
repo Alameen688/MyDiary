@@ -27,8 +27,12 @@ var EntryController = function (_ClientController) {
   _createClass(EntryController, [{
     key: 'create',
     value: function create(req, res, next) {
+      var _req$body = req.body,
+          title = _req$body.title,
+          content = _req$body.content;
+
       var action = 'INSERT INTO entries(title, content, user_id, created_at, updated_at)\n      VALUES($1, $2, $3, $4, $5) RETURNING id, title, content, created_at, updated_at ';
-      var values = [req.body.title, req.body.content, req.userData.id, 'NOW()', 'NOW()'];
+      var values = [title, content, req.userData.id, 'NOW()', 'NOW()'];
       var query = {
         text: action,
         values: values

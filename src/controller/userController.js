@@ -26,6 +26,14 @@ class UserController extends ClientController {
               });
           })
           .catch((e) => {
+            // check if the error was caused by a unique key constraint violation
+            // send a 409 status and a meaningful error msf for a user
+            // error code 23505 = unique_violation as specified in https://www.postgresql.org/docs/9.1/static/errcodes-appendix.html
+            // 10 is the radix to prevent eslint error -Missing radix parameter
+            if (parseInt(e.code, 10) === 23505) {
+              e.status = 409;
+              e.message = 'Sorry, an account with this email already exist';
+            }
             next(e);
           });
       })

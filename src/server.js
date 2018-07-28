@@ -24,6 +24,15 @@ app.all('/*', (req, res, next) => {
   }
 });
 
+// used to trim the body values posted
+app.use((req, res, next) => {
+  const keys = Object.keys(req.body);
+  keys.forEach((val) => {
+    req.body[val] = req.body[val].trim();
+  });
+  next();
+});
+
 app.use('/api/v1/entries', router.entries);
 app.use('/api/v1/auth', router.users);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));

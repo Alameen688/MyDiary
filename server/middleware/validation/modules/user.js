@@ -20,4 +20,12 @@ User.login = {
   },
 };
 
+User.update = {
+  body: {
+    fullname: Joi.string().required(),
+    email: Joi.string().email().required(),
+    fav_quote: Joi.string(),
+  },
+};
+
 module.exports = User;

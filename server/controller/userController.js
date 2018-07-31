@@ -44,7 +44,7 @@ class UserController extends ClientController {
 
   login(req, res, next) {
     const { email, password } = req.body;
-    this._client.query('SELECT id, fullname, email, password FROM users WHERE email=($1)', [email])
+    this._client.query('SELECT id, fullname, email, password, fav_quote FROM users WHERE email=($1)', [email])
       .then((result) => {
         if (result.rowCount > 0) {
           const data = result.rows[0];
@@ -56,6 +56,7 @@ class UserController extends ClientController {
                     id: data.id,
                     email: data.email,
                     fullname: data.fullname,
+                    fav_quote: data.fav_quote,
                   },
                   process.env.JWT_KEY,
                   {
@@ -88,6 +89,28 @@ class UserController extends ClientController {
         next(e);
       });
   }
+
+  update(req, res, next) {
+    const { fullname, email } = req.body;
+    const favouriteQuote = (Object.prototype.hasOwnProperty.call(req.body, 'fav_quote')) ? req.body.fav_quote : null;
+    const text = 'UPDATE users SET fullname=($1), email=($2), fav_quote=($3), updated_at=($4) WHERE id=($5) RETURNING id, fullname, email, fav_quote';
+    const values = [fullname, email, favouriteQuote, 'NOW()', req.userData.id];
+    const query = {
+      text,
+      values,
+    };
+    this._client.query(query)
+      .then((result) => {
+        res.status(200)
+          .json({
+            status: 'success',
+            data: result.rows[0],
+          });
+      })
+      .catch((e) => {
+        next(e);
+      });
+  }
 }
 
-module.exports = UserController;
+export default UserController;

@@ -1,0 +1,6 @@
+watcher_output/
+dist/
+test/
+coverage/
+node_modules/
+/UI

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/auth.css">
+    <title>Login | MyDiary - It's what happened</title>
+</head>
+<body>
+    <header>
+       <nav>
+        <div id="site-name"><a href="index.html">MyDiary</a></div>
+        <div class="nav-links">
+            <a class="nav-item" href="signup.html">Register</a>
+        </div>
+        </nav>
+    </header>
+    <main>
+        <div class="auth-box">
+            <h1>Login</h1>
+            <div id="error-box">
+
+            </div>
+            <form action="" method="get">
+                <div class="textbox">
+                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                    <input type="email" placeholder="Email" name="email" id="email">
+                </div>
+                <div class="textbox">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <input type="password" placeholder="Password" name="password" id="password">
+                </div>
+                <input type="submit" value="Log in" class="form-btn btn-login" id="submit-login">
+                <div class="link">
+                    <p>New user? <a href="signup.html">Sign Up</a></p>
+                </div>
+            </form>
+        </div>
+        
+    </main>
+    <footer>
+        
+    </footer>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/validate.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

@@ -9,8 +9,8 @@ const submitSignUp = document.getElementById('submit-signup');
 
 let errorMsgCode;
 
-const login = (e) => {
-  e.preventDefault();
+const login = (event) => {
+  event.preventDefault();
   const errorMsgElement = document.getElementById('error-msg');
   if (errorMsgElement !== null) {
     errorMsgElement.parentNode.removeChild(errorMsgElement);
@@ -68,8 +68,8 @@ const login = (e) => {
       errorBoxElement.innerHTML = errorMsgCode;
     });
 };
-const signup = (e) => {
-  e.preventDefault();
+const signup = (event) => {
+  event.preventDefault();
   const errorMsgElement = document.getElementById('error-msg');
   if (errorMsgElement !== null) {
     errorMsgElement.parentNode.removeChild(errorMsgElement);

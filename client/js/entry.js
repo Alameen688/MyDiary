@@ -11,7 +11,7 @@ const viewEntryContentBox = document.getElementById('entry-content-box');
 const viewEntryTitle = document.getElementById('entry-title');
 const viewEntryContent = document.getElementById('entry-content');
 const viewEntryDate = document.getElementById('date');
-const FAB = document.getElementById('floating-button');
+const floatingActionButton = document.getElementById('floating-button');
 
 let errorMsgCode;
 
@@ -20,10 +20,23 @@ if (checkCookie('token')) {
   token = getCookie('token');
 }
 
+const getOptions = (method, payload) => {
+  const options = {
+    method: method,
+    headers: {
+      Accept: 'application/json, text/plain,  */*',
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body:  JSON.stringify(payload),
+  };
+  return options
+}
+
 const formatDate = (date) => {
-  const d = new Date(date);
+  const parsedDate = new Date(date);
   const monthText = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const entryDate = `${monthText[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  const entryDate = `${monthText[parsedDate.getMonth()]} ${parsedDate.getDate()}, ${parsedDate.getFullYear()}`;
   return entryDate;
 };
 const getEntryItemCode = (id, title, date) => {
@@ -37,17 +50,12 @@ const getEntryItemCode = (id, title, date) => {
         <h1 class="title">${title}</h1>
         <div class="meta">
           <div class="avatar" entry-letter="${firstLetter}">
-            
           </div>
-          <!-- end .avatar-->
           <div class="date">
             <i class="fa fa-calendar"></i> <span>${entryDate}</span>
           </div>
-          <!-- end .date-->
         </div>
-        <!-- end .meta-->
       </div>
-      <!-- end .item-->
           
       </a>
   `;
@@ -77,15 +85,7 @@ const addNewEntry = (e) => {
     title,
     content,
   };
-  const options = {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json, text/plain,  */*',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(newEntryData),
-  };
+  const options = getOptions('POST', newEntryData);
 
   fetch(url, options)
     .then(res => res.json())
@@ -135,15 +135,7 @@ const saveEditEntry = (e, id) => {
     title,
     content,
   };
-  const options = {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json, text/plain,  */*',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(editEntryData),
-  };
+  const options = getOptions('PUT', editEntryData);
 
   fetch(url, options)
     .then(res => res.json())
@@ -174,14 +166,7 @@ const saveEditEntry = (e, id) => {
 
 const populateEntryToEdit = (id) => {
   const url = `${baseUrl}/entries/${id}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json, text/plain,  */*',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  const options = getOptions('GET');
 
   fetch(url, options)
     .then(res => res.json())
@@ -200,14 +185,7 @@ const populateEntryToEdit = (id) => {
 
 const getAllEntries = () => {
   const url = `${baseUrl}/entries`;
-  const options = {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json, text/plain,  */*',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  const options = getOptions('GET');
 
   fetch(url, options)
     .then(res => res.json())
@@ -231,14 +209,7 @@ const getAllEntries = () => {
 
 const getEntryById = (id) => {
   const url = `${baseUrl}/entries/${id}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json, text/plain,  */*',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  const options = getOptions('GET');
 
   fetch(url, options)
     .then(res => res.json())
@@ -256,7 +227,7 @@ const getEntryById = (id) => {
         viewEntryDate.innerHTML = entryDateCode;
         viewEntryContent.innerHTML = data.content;
         document.title = `${data.title}| MyDiary`;
-        FAB.firstElementChild.setAttribute('href', `/client/edit-entry.html?id=${data.id}`);
+        floatingActionButton.firstElementChild.setAttribute('href', `/client/edit-entry.html?id=${data.id}`);
       } else if (status === 'error') {
         if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
           let errorMsgs = '';

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/entry.css">
-    <title>New Entry - MyDiary</title>
+    <title>New Entry | MyDiary</title>
 </head>
 <body>
     <header>
@@ -19,21 +19,14 @@
     <main>
         <div id="write-box">
             <h1 id="write-title">New Entry</h1>
-            <div id="error-box">
-
-            </div>
-            <form action="">
-              <input type="text" name="" class="w-input" id="write-subject" placeholder="Subject">
-              <textarea name="" id="write-content" class="w-input" rows="10" placeholder="What happened...."></textarea>
+            <div id="error-box"></div>
+            <form>
+              <input type="text" class="w-input" id="write-subject" placeholder="Subject">
+              <textarea id="write-content" class="w-input" rows="10" placeholder="What happened...."></textarea>
               <input type="submit" value="Create" id="new-entry-btn" class="form-btn btn-entry">
             </form>
         </div>
-    </main>
-    <footer>
-        
-    </footer>
-
-    
+    </main>  
     <script src="js/utils.js"></script>
     <script src="js/validate.js"></script>
     <script src="js/entry.js"></script>

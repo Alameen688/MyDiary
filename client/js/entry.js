@@ -13,7 +13,6 @@ const viewEntryContent = document.getElementById('entry-content');
 const viewEntryDate = document.getElementById('date');
 const FAB = document.getElementById('floating-button');
 
-
 let errorMsgCode;
 
 let token;

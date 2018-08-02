@@ -22,16 +22,16 @@ if (checkCookie('token')) {
 
 const getOptions = (method, payload) => {
   const options = {
-    method: method,
+    method,
     headers: {
       Accept: 'application/json, text/plain,  */*',
       'Content-type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body:  JSON.stringify(payload),
+    body: JSON.stringify(payload),
   };
-  return options
-}
+  return options;
+};
 
 const formatDate = (date) => {
   const parsedDate = new Date(date);

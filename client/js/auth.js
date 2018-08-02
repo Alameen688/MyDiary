@@ -9,8 +9,8 @@ const submitSignUp = document.getElementById('submit-signup');
 
 let errorMsgCode;
 
-const login = (e) => {
-  e.preventDefault();
+const login = (event) => {
+  event.preventDefault();
   const errorMsgElement = document.getElementById('error-msg');
   if (errorMsgElement !== null) {
     errorMsgElement.parentNode.removeChild(errorMsgElement);
@@ -44,10 +44,20 @@ const login = (e) => {
   fetch(url, options)
     .then(res => res.json())
     .then((result) => {
-      const { status, message, errors } = result;
+      const {
+        status, message, errors, data,
+      } = result;
       let errorMsgs = '';
       if (status === 'success') {
-        setCookie('token', result.data.token, 2);
+        setCookie('token', data.token, 2);
+        const userData = {
+          fullname: data.fullname,
+          email: data.email,
+          favQuote: data.fav_quote,
+          entryCount: data.entryCount || null,
+        };
+        localStorage.setItem('user', JSON.stringify(userData));
+
         window.location = `${window.location.protocol}//${window.location.host}/client/list-entry.html`;
       } else if (status === 'error') {
         if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
@@ -68,8 +78,8 @@ const login = (e) => {
       errorBoxElement.innerHTML = errorMsgCode;
     });
 };
-const signup = (e) => {
-  e.preventDefault();
+const signup = (event) => {
+  event.preventDefault();
   const errorMsgElement = document.getElementById('error-msg');
   if (errorMsgElement !== null) {
     errorMsgElement.parentNode.removeChild(errorMsgElement);

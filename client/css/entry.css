@@ -212,6 +212,14 @@ main {
     text-align: center;
     font-weight: normal;
 }
+#error-msg{
+    background-color: #db4437;
+    color: whitesmoke;
+    width: 100%;
+    padding: 4px 8px;
+    margin: 0 auto
+}
+/**Entry Grid flex rule idea from https://codepen.io/vinaypuppal/pen/zrGgYK**/
 .entry-grid {
   display: flex;
   flex-wrap: wrap;
@@ -366,7 +374,7 @@ h3 {
   width: 55px;
   height: 55px;
   border-radius: 50%;
-  background: #db4437;
+  background: #4ea369;
   position: fixed;
   bottom: 30px;
   right: 30px;

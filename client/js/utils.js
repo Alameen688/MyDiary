@@ -1,16 +1,17 @@
 /* eslint-disable no-unused-vars */
 const baseUrl = 'http://127.0.0.1:3000/api/v1';
+/** WORKING WITH COOKIES REFERENCE https://www.w3schools.com/js/js_cookies.asp* */
 const getCookie = (cname) => {
   const name = `${cname}=`;
   const decodedCookie = decodeURIComponent(document.cookie);
-  const cookieStringArray = decodedCookie.split(';');
-  for (let i = 0; i < cookieStringArray.length; i + 1) {
-    let cookieString = cookieStringArray[i];
-    while (cookieString.charAt(0) === ' ') {
-      cookieString = cookieString.substring(1);
+  const ca = decodedCookie.split(';');
+  for (let i = 0; i < ca.length; i + 1) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
     }
-    if (cookieString.indexOf(name) === 0) {
-      return cookieString.substring(name.length, cookieString.length);
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
     }
   }
   return '';

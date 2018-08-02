@@ -55,3 +55,17 @@ const validateSignUp = (fullname, email, password, confirmPassword) => {
 
   return message;
 };
+
+const validateEntryField = (title, content) => {
+  const message = {};
+  message.title = [];
+  message.content = [];
+  if (title === '') {
+    message.title.push('Title field cannot be empty');
+  }
+
+  if (content === '') {
+    message.content.push('Content field cannot be empty');
+  }
+  return message;
+};

@@ -62,8 +62,10 @@ const login = (e) => {
         errorBoxElement.innerHTML = errorMsgCode;
       }
     })
-    .catch(() => {
-
+    .catch((err) => {
+      const message = `<li>${err}</li>`;
+      errorMsgCode = `<ul id="error-msg">${message}</ul>`;
+      errorBoxElement.innerHTML = errorMsgCode;
     });
 };
 const signup = (e) => {
@@ -124,8 +126,10 @@ const signup = (e) => {
         errorBoxElement.innerHTML = errorMsgCode;
       }
     })
-    .catch(() => {
-
+    .catch((err) => {
+      const message = `<li>${err}</li>`;
+      errorMsgCode = `<ul id="error-msg">${message}</ul>`;
+      errorBoxElement.innerHTML = errorMsgCode;
     });
 };
 window.onload = () => {

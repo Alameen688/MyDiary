@@ -68,8 +68,6 @@ const updateProfile = (event) => {
   fetch(url, options)
     .then(res => res.json())
     .then((result) => {
-      console.log(result);
-
       const {
         status, message, errors, data,
       } = result;
@@ -98,8 +96,6 @@ const updateProfile = (event) => {
       }
     })
     .catch((err) => {
-      console.log(err);
-
       const message = `<li>${err}</li>`;
       errorMsgCode = `<ul id="error-msg">${message}</ul>`;
       errorBoxElement.innerHTML = errorMsgCode;
@@ -108,6 +104,10 @@ const updateProfile = (event) => {
 
 window.onload = () => {
   if (profileSettingsBox !== null) {
+    if (checkCookie('token') === false) {
+      const msg = 'You are not authorized to perform this action, login to continue';
+      window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
+    }
     editProfileButton.addEventListener('click', updateProfile);
     displayProfile();
   }

@@ -1,11 +1,11 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars, no-plusplus */
 const baseUrl = 'http://127.0.0.1:3000/api/v1';
-/** WORKING WITH COOKIES REFERENCE https://www.w3schools.com/js/js_cookies.asp* */
+/** WORKING WITH COOKIES REFERENCE https://www.w3schools.com/js/js_cookies.asp * */
 const getCookie = (cname) => {
   const name = `${cname}=`;
   const decodedCookie = decodeURIComponent(document.cookie);
   const cookieArray = decodedCookie.split(';');
-  for (let index = 0; index < cookieArray.length; index + 1) {
+  for (let index = 0; index < cookieArray.length; index++) {
     let cookieString = cookieArray[index];
     while (cookieString.charAt(0) === ' ') {
       cookieString = cookieString.substring(1);

@@ -1,0 +1,6 @@
+/node_modules
+/coverage
+/server
+/client
+.env
+.coveralls.yml

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars, no-plusplus */
-const baseUrl = 'http://mydiaryoxygen.herokuapp.com/api/v1';
+const baseUrl = 'https://mydiaryoxygen.herokuapp.com/api/v1';
 /** WORKING WITH COOKIES REFERENCE https://www.w3schools.com/js/js_cookies.asp * */
 const getCookie = (cname) => {
   const name = `${cname}=`;

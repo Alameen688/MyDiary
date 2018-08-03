@@ -12,6 +12,7 @@ const viewEntryTitle = document.getElementById('entry-title');
 const viewEntryContent = document.getElementById('entry-content');
 const viewEntryDate = document.getElementById('date');
 const floatingActionButton = document.getElementById('floating-button');
+const navigationLinkElement = document.getElementsByClassName('nav-links')[0];
 
 let errorMsgCode;
 
@@ -20,6 +21,14 @@ if (checkCookie('token')) {
   token = getCookie('token');
 }
 
+const checkUrlForId = () => {
+  const currentLocation = new URL(document.location);
+  const params = (currentLocation).searchParams;
+  if (params.get('id') == null) {
+    const msg = '404 not found, no entry id was given';
+    window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
+  }
+};
 const getOptions = (method, payload) => {
   const options = {
     method,
@@ -62,8 +71,8 @@ const getEntryItemCode = (id, title, date) => {
   return entryItemCode;
 };
 
-const addNewEntry = (e) => {
-  e.preventDefault();
+const addNewEntry = (event) => {
+  event.preventDefault();
   const errorMsgElement = document.getElementById('error-msg');
   if (errorMsgElement !== null) {
     errorMsgElement.parentNode.removeChild(errorMsgElement);
@@ -114,9 +123,9 @@ const addNewEntry = (e) => {
     });
 };
 
-const saveEditEntry = (e, id) => {
+const saveEditEntry = (event, id) => {
   /** URL method from https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams* */
-  e.preventDefault();
+  event.preventDefault();
 
   const url = `${baseUrl}/entries/${id}`;
   const title = entrySubjectField.value;
@@ -170,10 +179,22 @@ const populateEntryToEdit = (id) => {
 
   fetch(url, options)
     .then(res => res.json())
-    .then((result) => {
-      if (result.status === 'success') {
-        entrySubjectField.value = result.data.title;
-        entryContentField.value = result.data.content;
+    .then(({
+      status, message, errors, data,
+    }) => {
+      if (status === 'success') {
+        entrySubjectField.value = data.title;
+        entryContentField.value = data.content;
+      } else if (status === 'error') {
+        let msg = '';
+        if (errors !== undefined) {
+          const { firstMessage } = errors[0];
+          msg = firstMessage;
+        } else if (message !== undefined) {
+          msg = message;
+        }
+        msg = encodeURIComponent(msg);
+        window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
       }
     })
     .catch((err) => {
@@ -248,23 +269,33 @@ const getEntryById = (id) => {
 };
 
 window.onload = () => {
+  // add profile image if user is logged in
+  if (checkCookie('token') === true) {
+    navigationLinkElement.innerHTML += '<a href="profile.html"><img id="user-icon" src="images/avatar.png"/></a>';
+  }
   if (newEntryButton !== null) {
+    if (checkCookie('token') === false) {
+      const msg = 'You are not authorized to perform this action, login to continue';
+      window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
+    }
     newEntryButton.addEventListener('click', addNewEntry);
   }
   if (editEntryButton !== null) {
+    checkUrlForId();
     const currentLocation = new URL(document.location);
     const params = (currentLocation).searchParams;
     const urlIdParam = params.get('id').trim();
     const entryId = parseInt(urlIdParam);
     populateEntryToEdit(entryId);
-    editEntryButton.addEventListener('click', (e) => {
-      saveEditEntry(e, entryId);
+    editEntryButton.addEventListener('click', (event) => {
+      saveEditEntry(event, entryId);
     });
   }
   if (gridBoxElement !== null) {
     getAllEntries();
   }
   if (viewEntryContentBox !== null) {
+    checkUrlForId();
     const currentLocation = new URL(document.location);
     const params = (currentLocation).searchParams;
     const urlIdParam = params.get('id').trim();

@@ -12,7 +12,6 @@
        <nav>
         <div id="site-name"><a href="index.html">MyDiary</a></div>
         <div class="nav-links">
-            <a href="profile.html"><img id="user-icon" src="images/avatar.jpg"/></a>
         </div>
         </nav>
     </header>
@@ -21,8 +20,8 @@
             <h1 id="write-title">Edit Entry</h1>
             <div id="error-box"></div>
             <form>
-              <input type="text" class="w-input" placeholder="Subject" id="write-subject">
-              <textarea id="write-content" class="w-input" rows="10" placeholder="What happened...."></textarea>
+              <input type="text" class="w-input" placeholder="Subject" id="write-subject" required>
+              <textarea id="write-content" class="w-input" rows="10" placeholder="What happened...." required></textarea>
               <input type="submit" value="Save" id="edit-entry-btn" class="form-btn btn-entry">
             </form>
         </div>

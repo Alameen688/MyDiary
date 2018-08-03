@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/entry.css">
+    <title>New Entry | MyDiary</title>
+</head>
+<body>
+    <header>
+       <nav>
+            <div id="site-name"><a href="index.html">MyDiary</a></div>
+            <div class="nav-links">
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div id="write-box">
+            <h1 id="write-title">New Entry</h1>
+            <div id="error-box"></div>
+            <form>
+              <input type="text" class="w-input" id="write-subject" placeholder="Subject" required>
+              <textarea id="write-content" class="w-input" rows="10" placeholder="What happened...." required></textarea>
+              <input type="submit" value="Create" id="new-entry-btn" class="form-btn btn-entry">
+            </form>
+        </div>
+    </main>  
+    <script src="js/utils.js"></script>
+    <script src="js/validate.js"></script>
+    <script src="js/entry.js"></script>
+</body>
+</html>

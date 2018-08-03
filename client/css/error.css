@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Slab|Titillium+Web|Lato');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+body{
+    font-family: 'Titillium Web', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    background: #323232;
+}
+header #site-name a{
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    color: #FAEDB8;
+    text-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: rgba(33.3,33.3,33.3);
+    padding: 0.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+nav a{
+    text-decoration: none;
+    color: #fff;
+}
+main{
+    margin: auto;
+    box-shadow: 30px 0px 40px rgba(0,0,0,0.2), 
+        -30px 0px 40px rgba (0,0,0,0.2);
+}
+#error-container{
+    overflow: hidden;
+    padding: 25px 20px;
+    width: 80%;
+    margin: 50px auto;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+    background: rgba(33.3,33.3,33.3, 0.5);
+    color: #fff;
+}
+#error-container h1{
+    width: 100%;
+    text-align: center;
+    line-height: 2em
+}
+#error-content{
+    background-color: #db4437;
+    font-size: 1.8em;
+    padding: 10px;
+}

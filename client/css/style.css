@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Slab|Titillium+Web|Lato');
+body{
+    font-family: 'Roboto Slab', sans-serif;
+    margin: 0;
+    background: #eee;
+    height: auto;
+}
+
+h1 {
+    font-weight: 400;
+    font-size: 2.5rem;
+}
+
+#landing-text h1{
+    font-family: 'Roboto Slab', sans-serif;
+    text-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+}
+#landing-text h1 a {
+    color: #FAEDB8;
+    text-decoration: none
+}
+#landing-text h1 a:hover{
+    opacity: 0.9;
+}
+
+h2 {
+    font-weight: 400;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+main {
+    margin: auto;
+    box-shadow: 30px 0px 40px rgba(0,0,0,0.2), 
+        -30px 0px 40px rgba (0,0,0,0.2);
+}
+
+#landing {
+    background: #fff;
+}
+#landing-text {
+    display: flex;
+    flex: 0 1 50vw;
+    height: 50vh;
+    justify-content: center; /*center horizontal*/
+    align-items: center; /* center vertical*/
+    text-align: center;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    background: rgba(50, 50, 50, 0.9);
+}
+#landing-text h2 {
+    color: #fff;
+    font-family: 'Roboto Slab', sans-serif;
+}
+#actions {
+    display: block;
+}
+.btn {
+    padding: 0.5rem 2rem;
+    border: 1px solid transparent;
+    display: inline-block;
+    margin: 2rem 0 0;
+    border-radius: 50px;
+    text-decoration: none;
+    color: #fff;
+    transition: background 500ms ease;
+    background: #7F7FD5;
+    opacity: 0.6;
+}
+.btn:hover {
+    background: #7F7FD5;  
+    background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); 
+    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); 
+}
+
+#get-started {
+    background: #8360c3; 
+}
+#get-started:hover {
+    background: #8360c3; 
+    background: -webkit-linear-gradient(to right, #2ebf91, #8360c3); 
+    background: linear-gradient(to right, #2ebf91, #8360c3); 
+}
+#landing-image {
+    background: url('../images/landing-unsplash.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    flex: 0 1 50vw;
+    height: 50vh;
+    margin: 0;
+}
+#header {
+    padding: 1.5rem;
+    text-align: center;
+    background: #ccc;
+    color: #fff;
+}
+#header h2 {
+    border-left: dotted 1px #fff;
+    border-right: dotted 1px #fff;
+    display: inline-block;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+.captions {
+    padding: 0.8rem;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin: auto;
+    color: #333;
+}
+footer h3 {
+    font-size: 3rem;
+    margin-bottom: 0;
+}
+
+
+/** Screen sizes 500px and up **/
+@media(min-width: 500px) {
+    #landing {
+        display: flex;
+        height: 100%;
+    }
+    #landing-text {
+        height: 100vh;
+    }
+    #landing-image {
+        height: 100vh;
+    }
+    .btn {
+        display: block;
+    }
+}
+
+/** Screen sizes 700px and up **/
+@media(min-width: 700px) {
+    #actions {
+        display: block;
+        width: 300px;
+        margin: 0 auto;
+        margin-top: 25%;
+        
+    }
+    .btn {
+        padding: 0.7rem 1rem;
+    }
+}
+
+
+/**
+* References
+* Gradients from https://uigradients.com
+* Splits screen landing page inspiration from https://www.youtube.com/watch?v=XsEnj-1hG2o
+**/

@@ -22,7 +22,7 @@
                 <p id="fav-quote"><i class="fa fa-quote-left"></i>You only live once but if you do it right, once is enough!<i class="fa fa-quote-right"></i></p>
             </div>
             <div id="profile-image">
-                <img id="avatar" src="images/avatar.jpg"/>
+                <img id="avatar" src="images/avatar.png"/>
             </div>
         </section>
     </header>
@@ -42,21 +42,17 @@
             <h2 class="settings-title">
                Reminder settings
            </h2>
-            <form action="" id="reminder-settings">
-                  <select name="reminder-option" id="" class="s-input">
-                       <option value="">Select a period</option>
-                       <option value="morning">Morning 5:30am</option>
-                       <option value="afternoon">Afternoon 12:30pm</option>
-                       <option value="night">Night 9:30pm</option>
-                </select>
-                <div class="settings-action">
-                    <input type="submit" value="Save" id="edit-rem-btn" class="s-btn">    
-                </div>
-            </form>
+           <form id="reminder-settings">
+                <select name="reminder-option" id="" class="s-input">
+                     <option value="">Daily evening remainder</option>
+                     <option value="on">On</option>
+                     <option value="off">Off</option>
+              </select>
+              <div class="settings-action">
+                  <input type="submit" value="Activate settings" id="edit-rem-btn" class="s-btn">    
+              </div>
+          </form>
         </div>
     </main>
-    <footer>
-        
-    </footer>
 </body>
 </html>

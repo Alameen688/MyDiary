@@ -81,7 +81,7 @@ const updateProfile = (event) => {
         };
         localStorage.setItem('user', JSON.stringify(userData));
 
-        window.location = `${window.location.protocol}//${window.location.host}/client/profile.html`;
+        window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/profile.html`;
       } else if (status === 'error') {
         if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
           errors.forEach((error) => {
@@ -106,7 +106,7 @@ window.onload = () => {
   if (profileSettingsBox !== null) {
     if (checkCookie('token') === false) {
       const msg = 'You are not authorized to perform this action, login to continue';
-      window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
+      window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/error.html?msg=${msg}`;
     }
     editProfileButton.addEventListener('click', updateProfile);
     displayProfile();

@@ -26,7 +26,7 @@ const checkUrlForId = () => {
   const params = (currentLocation).searchParams;
   if (params.get('id') == null) {
     const msg = '404 not found, no entry id was given';
-    window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
+    window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/error.html?msg=${msg}`;
   }
 };
 const getOptions = (method, payload) => {
@@ -53,7 +53,7 @@ const getEntryItemCode = (id, title, date) => {
   const entryDate = formatDate(date);
 
   const entryItemCode = `
-    <a class="item" href="/client/view-entry.html?id=${id}">
+    <a class="item" href="/MyDiary/client/view-entry.html?id=${id}">
             
       <div>
         <h1 class="title">${title}</h1>
@@ -102,7 +102,7 @@ const addNewEntry = (event) => {
       const { status, message, errors } = result;
       let errorMsgs = '';
       if (status === 'success') {
-        window.location = `${window.location.protocol}//${window.location.host}/client/list-entry.html`;
+        window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/list-entry.html`;
       } else if (status === 'error') {
         if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
           errors.forEach((error) => {
@@ -152,7 +152,7 @@ const saveEditEntry = (event, id) => {
       const { status, message, errors } = result;
       let errorMsgs = '';
       if (status === 'success') {
-        window.location = `${window.location.protocol}//${window.location.host}/client/view-entry.html?id=${id}`;
+        window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/view-entry.html?id=${id}`;
       } else if (status === 'error') {
         if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
           errors.forEach((error) => {
@@ -194,7 +194,7 @@ const populateEntryToEdit = (id) => {
           msg = message;
         }
         msg = encodeURIComponent(msg);
-        window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
+        window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/error.html?msg=${msg}`;
       }
     })
     .catch((err) => {
@@ -248,7 +248,7 @@ const getEntryById = (id) => {
         viewEntryDate.innerHTML = entryDateCode;
         viewEntryContent.innerHTML = data.content;
         document.title = `${data.title}| MyDiary`;
-        floatingActionButton.firstElementChild.setAttribute('href', `/client/edit-entry.html?id=${data.id}`);
+        floatingActionButton.firstElementChild.setAttribute('href', `/MyDiary/client/edit-entry.html?id=${data.id}`);
       } else if (status === 'error') {
         if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
           let errorMsgs = '';
@@ -276,7 +276,7 @@ window.onload = () => {
   if (newEntryButton !== null) {
     if (checkCookie('token') === false) {
       const msg = 'You are not authorized to perform this action, login to continue';
-      window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
+      window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/error.html?msg=${msg}`;
     }
     newEntryButton.addEventListener('click', addNewEntry);
   }

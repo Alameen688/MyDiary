@@ -58,7 +58,7 @@ const login = (event) => {
         };
         localStorage.setItem('user', JSON.stringify(userData));
 
-        window.location = `${window.location.protocol}//${window.location.host}/client/list-entry.html`;
+        window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/list-entry.html`;
       } else if (status === 'error') {
         if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
           errors.forEach((error) => {
@@ -122,7 +122,7 @@ const signup = (event) => {
       const { status, message, errors } = result;
       let errorMsgs = '';
       if (result.status === 'success') {
-        window.location = `${window.location.protocol}//${window.location.host}/client/login.html`;
+        window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/login.html`;
       } else if (status === 'error') {
         if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
           errors.forEach((error) => {

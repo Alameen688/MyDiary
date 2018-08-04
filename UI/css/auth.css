@@ -79,7 +79,7 @@ main {
     justify-content: center;
     align-items: center;
 }
-.auth-box {
+.login-box {
     width: 80%;
     box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
     padding: 20px;
@@ -89,10 +89,7 @@ main {
     border: 1px solid #7F7FD5;
     margin-bottom: 20px;
 }
-#signup-box {
-    padding-bottom: 1px;
-}
-.auth-box h1 {
+.login-box h1 {
     align-content: flex-start;
     font-size: 2.2rem;
     border-bottom: 6px solid #7F7FD5;
@@ -100,9 +97,7 @@ main {
     padding: 13px 0;
     color: #fff;
 }
-h1#signup-title{
-    margin-bottom: 10px;
-}
+
 .textbox{
     overflow: hidden;
     width: 100%;
@@ -200,26 +195,21 @@ h1#signup-title{
 
 /** Screen sizes 700px and up **/
 @media(min-width: 700px) {
-    .auth-box {
+    .login-box {
         width: 50%;
     }
 }
 
 /** Screen sizes 900px and up **/
 @media(min-width: 900px) {
-    .auth-box {
+    .login-box {
         width: 40%;
     }
 }
 
 /** Screen sizes 1000px and up **/
 @media(min-width: 1000px) {
-    .auth-box {
+    .login-box {
         width: 30%;
     }
 }
-
-/**
-* References
-* Gradients from https://uigradients.com
-**/

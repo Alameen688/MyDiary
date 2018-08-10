@@ -1,15 +1,18 @@
 language: node_js
 node_js:
   - "stable"
+services:
+ - postgres
 env: 
   global: 
-    - DATABASE_URL=postgres://cjijxser:YXeE9MornoVe9VYy0nrEthr16L2UXspN@pellefant.db.elephantsql.com:5432/cjijxser
-    - JWT_KEY=2oxygenissagoal2
-    - JWT_EXPIRY=2d
-    - JWT_AUTH_TOKEN_TEST=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhc2hpcmlAcGlvY29kZS5jb20iLCJmdWxsbmFtZSI6Ikl5YW51IGFzaGlyaSIsImlhdCI6MTUzMjU2MjQxNCwiZXhwIjoxNTMyNzM1MjE0fQ.BXkEk2-IB12FucAznVfrj-wk9bUs0560OVSmddX1FaM
+    - DATABASE_URL=postgresql://postgres:@localhost:5432/mydiarydbtest
 sudo: false # makes tests faster
 install:
   - npm install
+before_script:
+  - psql -c 'drop database if exists mydiarydbtest;' -U postgres
+  - psql -c 'create database mydiarydbtest;' -U postgres
+  - npm run db
 script: npm run pretest
 after_success:
   - npm run coveralls

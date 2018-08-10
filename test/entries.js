@@ -12,6 +12,11 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
+const userCredentials = {
+  email: 'tester@mydiary.com', 
+  password: 'tester'
+}
+
 const newEntry = {
   title: 'Setting up testing',
   content: `I've heard about testing before but never had a reason to take it so serious
@@ -27,15 +32,28 @@ const invalidEntries = [
   }
 ];
 
-
+let token = "";
 let id = "";
 
 describe('Entries route', () => {
+
+  before((done)=>{
+    chai.request(server)
+      .post('/api/v1/auth/login')
+      .send(userCredentials)
+      .end((err, res) => {
+        if (err) throw err;                  
+        token = res.body.data.token;
+        res.should.have.status(200);
+        done();
+      });
+  });
+
   describe('/POST method', () => {
     it('should create a new entry and return 201 status', (done) => {
       chai.request(server)
         .post('/api/v1/entries')
-        .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(newEntry)
         .end((err, res) => {
           id = res.body.data.id;
@@ -52,7 +70,7 @@ describe('Entries route', () => {
       let invalidEntry = invalidEntries[i];
       chai.request(server)
         .post('/api/v1/entries')
-        .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(invalidEntry)
         .end((err, res) => {
           res.should.have.status(400);
@@ -70,7 +88,7 @@ describe('Entries route', () => {
     it('should return 200 status and get all the entries', (done) => {
       chai.request(server)
         .get('/api/v1/entries')
-        .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
+        .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
@@ -86,7 +104,7 @@ describe('Entries route', () => {
     it('should return 200 status and get an entry by a given id', (done) => {
       chai.request(server)
         .get(`/api/v1/entries/${id}`)
-        .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
+        .set('Authorization', `Bearer ${token}`)
         .end((error, response) => {
           response.should.have.status(200);
           response.body.should.be.a('object');
@@ -107,7 +125,7 @@ describe('Entries route', () => {
     it('should return 200 and update an entry by a given id', (done) => {
       chai.request(server)
         .put(`/api/v1/entries/${id}`)
-        .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(entryUpdate)
         .end((error, response) => {
           response.should.have.status(200);
@@ -118,7 +136,7 @@ describe('Entries route', () => {
     it('should return 400 satus with errors when invalid id is used', (done) => {
       chai.request(server)
         .put('/api/v1/entries/054c0398f7c70b2e')
-        .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(entryUpdate)
         .end((error, response) => {
           response.should.have.status(400);
@@ -133,7 +151,7 @@ describe('Entries route', () => {
     it('should return 404 status when id is not found', (done) => {
       chai.request(server)
         .put('/api/v1/entries/50002')
-        .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(entryUpdate)
         .end((error, response) => {
           response.should.have.status(404);
@@ -146,7 +164,7 @@ describe('Entries route', () => {
       let invalidEntry = invalidEntries[i];
       chai.request(server)
         .put(`/api/v1/entries/${id}`)
-        .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(invalidEntry)
         .end((err, res) => {
           res.should.have.status(400);
@@ -164,7 +182,7 @@ describe('Entries route', () => {
     it('should 204 status after deleting an entry by a given id', (done) => {
       chai.request(server)
         .delete(`/api/v1/entries/${id}`)
-        .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
+        .set('Authorization', `Bearer ${token}`)
         .end((error, response) => {
           response.should.have.status(204);
           done();
@@ -174,7 +192,7 @@ describe('Entries route', () => {
     it('should return 404 status when id of entry to delete is not found', (done) => {
       chai.request(server)
         .delete('/api/v1/entries/500056')
-        .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
+        .set('Authorization', `Bearer ${token}`)
         .end((error, response) => {
           response.should.have.status(404);
           done();
@@ -186,7 +204,7 @@ describe('Entries route', () => {
     it('should return a 404 error with an error message', (done) => {
       chai.request(server)
         .get('/api/v1/entri')
-        .set('Authorization', `Bearer ${process.env.JWT_AUTH_TOKEN_TEST}`)
+        .set('Authorization', `Bearer ${token}`)
         .end((err, res) => {
           res.body.should.have.property('status');
           res.body.status.should.equal('error');

@@ -10,6 +10,7 @@ sudo: false # makes tests faster
 install:
   - npm install
 before_script:
+  - psql -c 'drop database if exists mydiarydbtest;' -U postgres
   - psql -c 'create database mydiarydbtest;' -U postgres
   - npm run db
 script: npm run pretest

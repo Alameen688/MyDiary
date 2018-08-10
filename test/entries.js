@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: 0 */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../server/server';
+import server from '../dist/server';
 
 /** disabled no-unused-vars for this file
  *  to prevent 'should' from throwing error
@@ -35,19 +35,20 @@ const invalidEntries = [
 let token = "";
 let id = "";
 
-before((done)=>{
-  chai.request(server)
-    .post('/api/v1/auth/login')
-    .send(userCredentials)
-    .end((err, res) => {
-      if (err) throw err;                  
-      token = res.body.data.token;
-      res.should.have.status(200);
-      done();
-    });
-});
-
 describe('Entries route', () => {
+
+  before((done)=>{
+    chai.request(server)
+      .post('/api/v1/auth/login')
+      .send(userCredentials)
+      .end((err, res) => {
+        if (err) throw err;                  
+        token = res.body.data.token;
+        res.should.have.status(200);
+        done();
+      });
+  });
+
   describe('/POST method', () => {
     it('should create a new entry and return 201 status', (done) => {
       chai.request(server)

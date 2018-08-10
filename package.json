@@ -1,5 +1,5 @@
 {
-  "name": "MyDiary",
+  "name": "mydiary",
   "version": "1.0.0",
   "description": "Server side app that provides mydiary ui client with data",
   "engines": {

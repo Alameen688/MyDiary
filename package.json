@@ -11,7 +11,7 @@
     "pretest": "eslint . && npm run build",
     "lintfix": "eslint . --fix",
     "build": "npm run lintfix && babel server -d dist",
-    "db": "node ./dist/dbconfig/database.js",
+    "db": "babel-node ./server/dbconfig/database.js",
     "cover": "babel-node ./node_modules/istanbul/lib/cli cover --hook-run-in-context node_modules/mocha/bin/_mocha -- -R spec --timeout 10000 test/*.js --exit",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "dev": "nodemon --watch server --exec babel-node ./server/server",

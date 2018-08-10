@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: 0 */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../dist/server';
+import server from '../server/server';
 
 /** disabled no-unused-vars for this file
  *  to prevent 'should' from throwing error

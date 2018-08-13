@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import swaggerDoc from '../swagger.json';
 import router from './router/index';
+import NotificationController from './controller/notificationController';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -78,6 +79,9 @@ if (!module.parent) {
     // console.log(`Listening on port ${port}`);
   });
 }
+
+const notification = new NotificationController();
+notification.dailyNotifier();
 
 // export app for testing
 module.exports = app;

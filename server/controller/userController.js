@@ -111,6 +111,27 @@ class UserController extends ClientController {
         next(e);
       });
   }
+
+  notificationSettings(req, res, next) {
+    const { status } = req.body;
+    const text = 'UPDATE users SET notification=($1) WHERE id=($2) RETURNING notification';
+    const values = [status, req.userData.id];
+    const query = {
+      text,
+      values,
+    };
+    this._client.query(query)
+      .then((result) => {
+        res.status(200)
+          .json({
+            status: 'success',
+            data: result.rows[0],
+          });
+      })
+      .catch((e) => {
+        next(e);
+      });
+  }
 }
 
 export default UserController;

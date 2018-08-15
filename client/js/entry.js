@@ -1,4 +1,4 @@
-/* global baseUrl, checkCookie, getCookie, validateEntryField */
+/* global baseUrl, checkCookie, getOptions, validateEntryField */
 /* eslint-disable radix */
 const errorBoxElement = document.getElementById('error-box');
 const entrySubjectField = document.getElementById('write-subject');
@@ -16,11 +16,6 @@ const navigationLinkElement = document.getElementsByClassName('nav-links')[0];
 
 let errorMsgCode;
 
-let token;
-if (checkCookie('token')) {
-  token = getCookie('token');
-}
-
 const checkUrlForId = () => {
   const currentLocation = new URL(document.location);
   const params = (currentLocation).searchParams;
@@ -28,18 +23,6 @@ const checkUrlForId = () => {
     const msg = '404 not found, no entry id was given';
     window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
   }
-};
-const getOptions = (method, payload) => {
-  const options = {
-    method,
-    headers: {
-      Accept: 'application/json, text/plain,  */*',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(payload),
-  };
-  return options;
 };
 
 const formatDate = (date) => {

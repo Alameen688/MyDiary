@@ -28,4 +28,10 @@ User.update = {
   },
 };
 
+User.notification = {
+  body: {
+    status: Joi.any().valid(['on', 'off']).required(),
+  },
+};
+
 module.exports = User;

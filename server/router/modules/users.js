@@ -22,4 +22,8 @@ router.put('/updateuser', [auth.isValid, validate(Validation.User.update)], (req
   user.update(req, res, next);
 });
 
+router.put('/notification', [auth.isValid], validate(Validation.User.notification), (req, res, next) => {
+  user.notificationSettings(req, res, next);
+});
+
 module.exports = router;

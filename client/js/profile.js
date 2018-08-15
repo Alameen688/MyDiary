@@ -1,5 +1,6 @@
-/* global baseUrl, checkCookie, getCookie, validateProfileField */
-const errorBoxElement = document.getElementById('error-box');
+/* global baseUrl, checkCookie, getOptions, validateProfileField */
+const errorBoxElement = document.getElementsByClassName('error-box')[0];
+const notificationErrorBox = document.getElementsByClassName('error-box')[1];
 const profileSettingsBox = document.getElementById('settings-box');
 const fullNameHeading = document.getElementById('fullname-heading');
 const fullnameField = document.getElementById('full-name');
@@ -8,13 +9,10 @@ const favoriteQuoteHeading = document.getElementById('fav-quote');
 const favQuoteTextField = document.getElementById('fav-quote-text');
 const entriesCountField = document.getElementsByClassName('entries-count')[0];
 const editProfileButton = document.getElementById('edit-profile-btn');
+const editReminderButton = document.getElementById('edit-rem-btn');
+const reminderOption = document.getElementById('reminder-option');
 
 let errorMsgCode;
-
-let token;
-if (checkCookie('token')) {
-  token = getCookie('token');
-}
 
 const displayProfile = () => {
   const userDetails = JSON.parse(localStorage.getItem('user'));
@@ -56,15 +54,8 @@ const updateProfile = (event) => {
     fav_quote: userFavQuote,
   };
 
-  const options = {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json, text/plain,  */*',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(editProfileData),
-  };
+  const options = getOptions('PUT', editProfileData);
+
   fetch(url, options)
     .then(res => res.json())
     .then((result) => {
@@ -102,6 +93,48 @@ const updateProfile = (event) => {
     });
 };
 
+const updateNotification = (event) => {
+  event.preventDefault();
+  const url = `${baseUrl}/auth/notification`;
+  const option = reminderOption.value;
+  if (option === '') {
+    return;
+  }
+
+  const payload = {
+    status: option,
+  };
+  const requestOptions = getOptions('PUT', payload);
+  fetch(url, requestOptions)
+    .then(res => res.json())
+    .then(({
+      status, message, errors, data,
+    }) => {
+      let errorMsgs = '';
+      if (status === 'success') {
+        const info = `<li>Succesfully turned ${data.notification} notification</li>`;
+        errorMsgCode = `<ul id="error-msg">${info}</ul>`;
+        notificationErrorBox.innerHTML = errorMsgCode;
+      } else if (status === 'error') {
+        if (errors) {
+          errors.forEach((error) => {
+            errorMsgs += `<li>${error}</li>`;
+          });
+          errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
+        } else {
+          errorMsgs += `<li>${message}</li>`;
+          errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
+        }
+        notificationErrorBox.innerHTML = errorMsgCode;
+      }
+    })
+    .catch((err) => {
+      const message = `<li>${err}</li>`;
+      errorMsgCode = `<ul id="error-msg">${message}</ul>`;
+      notificationErrorBox.innerHTML = errorMsgCode;
+    });
+};
+
 window.onload = () => {
   if (profileSettingsBox !== null) {
     if (checkCookie('token') === false) {
@@ -109,6 +142,7 @@ window.onload = () => {
       window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
     }
     editProfileButton.addEventListener('click', updateProfile);
+    editReminderButton.addEventListener('click', updateNotification);
     displayProfile();
   }
 };

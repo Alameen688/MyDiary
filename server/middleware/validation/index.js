@@ -1,7 +1,7 @@
 import Entry from './modules/entry';
-import User from './modules/user';
+import Auth from './modules/auth';
 
 module.exports = {
   Entry,
-  User,
+  Auth,
 };

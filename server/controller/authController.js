@@ -6,7 +6,7 @@ import ClientController from './clientController';
 
 dotenv.config();
 
-class UserController extends ClientController {
+class AuthController extends ClientController {
   create(req, res, next) {
     bcrypt.hash(req.body.password, 10)
       .then((hash) => {
@@ -134,4 +134,4 @@ class UserController extends ClientController {
   }
 }
 
-export default UserController;
+export default AuthController;

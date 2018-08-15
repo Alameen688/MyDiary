@@ -1,11 +1,11 @@
 import Joi from 'joi';
 
-class User {
+class Auth {
 
 }
-// static class property of User validation class
+// static class property of Auth validation class
 
-User.signup = {
+Auth.signup = {
   body: {
     fullname: Joi.string().required(),
     email: Joi.string().email().required(),
@@ -13,14 +13,14 @@ User.signup = {
   },
 };
 
-User.login = {
+Auth.login = {
   body: {
     email: Joi.string().email().required(),
     password: Joi.string().regex(/^[a-zA-Z0-9]{3,100}$/).required(),
   },
 };
 
-User.update = {
+Auth.update = {
   body: {
     fullname: Joi.string().required(),
     email: Joi.string().email().required(),
@@ -28,10 +28,10 @@ User.update = {
   },
 };
 
-User.notification = {
+Auth.notification = {
   body: {
     status: Joi.any().valid(['on', 'off']).required(),
   },
 };
 
-module.exports = User;
+module.exports = Auth;

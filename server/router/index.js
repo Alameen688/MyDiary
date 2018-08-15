@@ -1,8 +1,8 @@
 import entries from './modules/entries';
-import users from './modules/users';
+import auth from './modules/auth';
 
 
 module.exports = {
   entries,
-  users,
+  auth,
 };

@@ -11,38 +11,74 @@ import server from '../server/server';
 const should = chai.should();
 
 chai.use(chaiHttp);
-let randNum = Math.floor(Math.random() * 125);
-let newUser = {
-  fullname: 'Tester Testing',
-  email: `test${randNum}@example.com`,
+
+const userCredentials = {
+  email: 'tester@mydiary.com', 
   password: 'tester'
 }
 
-describe('Users route', ()=>{
-  it('should return 201 status and create a new user', (done)=>{
-    chai.request(server)
-      .post('/api/v1/auth/signup')
-      .send(newUser)
-      .end((err, res) => {
-        res.should.have.status(201);
-        res.body.data.should.be.a('object');
-        done();
-      })    
-  });
+const userCredentialsUpdate = {
+  fullname: 'Tested Editor',
+  email: 'tester@mydiary.com', 
+}
 
-  it('should return 200 status and login an existing user', (done)=>{
-    let loginInfo = {
-      email: newUser.email,
-      password: newUser.password
-    }
+const onNotificationData = {
+  status: 'on',
+}
+
+const offNotificationData = {
+  status: 'off',
+}
+
+let token = '';
+
+describe('Users route', ()=>{
+  before((done)=>{
     chai.request(server)
       .post('/api/v1/auth/login')
-      .send(loginInfo)
+      .send(userCredentials)
       .end((err, res) => {
+        if (err) throw err;                  
+        token = res.body.data.token;
         res.should.have.status(200);
-        res.body.data.should.be.a('object');
         done();
-      })    
-  })
+      });
+  });
+
+  it('should return 200 and update details of a logged in user', (done) => {
+    chai.request(server)
+      .put(`/api/v1/users/update`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(userCredentialsUpdate)
+      .end((error, response) => {
+        response.should.have.status(200);
+        response.body.data.should.be.a('object');
+        done();
+      });
+  });
+
+  it('should return 200 and set user notification status to on', (done) => {
+    chai.request(server)
+      .put(`/api/v1/users/notification`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(onNotificationData)
+      .end((error, response) => {
+        response.should.have.status(200);
+        response.body.data.should.be.a('object');
+        done();
+      });
+  });
+
+  it('should return 200 and set user notification status to off', (done) => {
+    chai.request(server)
+      .put(`/api/v1/users/notification`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(offNotificationData)
+      .end((error, response) => {
+        response.should.have.status(200);
+        response.body.data.should.be.a('object');
+        done();
+      });
+  });
   
 })

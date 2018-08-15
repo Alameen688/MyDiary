@@ -31,7 +31,7 @@ const displayProfile = () => {
 
 const updateProfile = (event) => {
   event.preventDefault();
-  const url = `${baseUrl}/auth/updateuser`;
+  const url = `${baseUrl}/users/update`;
   const userFullName = fullnameField.value;
   const userEmail = emailField.value;
   const userFavQuote = favQuoteTextField.value;
@@ -95,7 +95,7 @@ const updateProfile = (event) => {
 
 const updateNotification = (event) => {
   event.preventDefault();
-  const url = `${baseUrl}/auth/notification`;
+  const url = `${baseUrl}/user/notification`;
   const option = reminderOption.value;
   if (option === '') {
     return;

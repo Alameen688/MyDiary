@@ -10,7 +10,9 @@ class ClientController {
     this._client = new Client({
       connectionString: this._connectionString,
     });
-    this._client.connect();
+    this._client.connect()
+      .then(() => console.log('Connection successful'))
+      .catch(err => console.log(err.message));
   }
 }
 

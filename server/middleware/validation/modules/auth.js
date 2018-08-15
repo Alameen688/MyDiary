@@ -20,18 +20,4 @@ Auth.login = {
   },
 };
 
-Auth.update = {
-  body: {
-    fullname: Joi.string().required(),
-    email: Joi.string().email().required(),
-    fav_quote: Joi.string(),
-  },
-};
-
-Auth.notification = {
-  body: {
-    status: Joi.any().valid(['on', 'off']).required(),
-  },
-};
-
 module.exports = Auth;

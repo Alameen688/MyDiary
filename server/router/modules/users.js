@@ -7,6 +7,9 @@ import authorization from '../../middleware/authorization/auth';
 const router = express.Router();
 const user = new UserController();
 
+router.get('/profile', authorization.isValid, (req, res, next) => {
+  user.getUserDetails(req, res, next);
+});
 
 router.put('/update', [authorization.isValid, validate(Validation.User.update)], (req, res, next) => {
   user.update(req, res, next);

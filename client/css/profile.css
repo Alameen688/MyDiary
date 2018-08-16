@@ -168,12 +168,22 @@ main {
 #edit-profile-btn:hover {
     border-top: 3px solid #FAEDB8;
 }
+#save-profile-btn{
+    background: #47cf73;
+    border-top: 3px solid #ccc;
+}
+#save-profile-btn:hover {
+    border-top: 3px solid #FAEDB8;
+}
 #edit-rem-btn{
     border-top: 3px solid #ccc;
     background: #04b5f7;
 }
 #edit-rem-btn:hover{
     border-top: 3px solid #FAEDB8;
+}
+.reminder-btn-active{
+    background: #47cf73 !important;
 }
 h2.settings-title{
     border-bottom: 3px solid #FAEDB8;

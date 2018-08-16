@@ -80,5 +80,18 @@ describe('Users route', ()=>{
         done();
       });
   });
+
+  it('should return 200 status and get user profile', (done) => {
+    chai.request(server)
+      .get('/api/v1/users/profile')
+      .set('Authorization', `Bearer ${token}`)
+      .end((err, response) => {
+        response.should.have.status(200);
+        response.body.should.be.a('object');
+        response.body.should.have.property('status');
+        response.body.status.should.equal('success');
+        done();
+      });
+  });
   
 })

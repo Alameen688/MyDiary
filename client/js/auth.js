@@ -53,8 +53,6 @@ const login = (event) => {
         const userData = {
           fullname: data.fullname,
           email: data.email,
-          favQuote: data.fav_quote,
-          entryCount: data.entryCount || null,
         };
         localStorage.setItem('user', JSON.stringify(userData));
 

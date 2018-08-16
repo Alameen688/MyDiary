@@ -14,19 +14,63 @@ const reminderOption = document.getElementById('reminder-option');
 
 let errorMsgCode;
 
+const disableInput = () => {
+  fullnameField.disabled = true;
+  emailField.disabled = true;
+  favQuoteTextField.disabled = true;
+  editReminderButton.disabled = true;
+};
+
+const activateReminderAction = () => {
+  editReminderButton.disabled = false;
+  editReminderButton.classList.add('reminder-btn-active');
+};
+
 const displayProfile = () => {
-  const userDetails = JSON.parse(localStorage.getItem('user'));
-  const {
-    fullname, email, favQuote, entryCount,
-  } = userDetails;
-  document.title = `${fullname} | MyDiary`;
-  fullNameHeading.innerText = fullname;
-  fullnameField.value = fullname;
-  emailField.value = email;
-  favQuoteTextField.value = favQuote || '';
-  const favoriteQuote = favQuote || 'A wise man once said, put your favorite quote here';
-  favoriteQuoteHeading.innerHTML = `<i class="fa fa-quote-left"></i>${favoriteQuote}<i class="fa fa-quote-right"></i>`;
-  entriesCountField.firstElementChild.innerHTML = entryCount || '?';
+  const url = `${baseUrl}/users/profile`;
+  const options = getOptions('GET');
+
+  fetch(url, options)
+    .then(res => res.json())
+    .then(({
+      status, data, message, errors,
+    }) => {
+      if (status === 'success') {
+        // const userDetails = JSON.parse(localStorage.getItem('user'));
+        const userDetails = {
+          fullname: data.fullname,
+          email: data.email,
+          favQuote: data.fav_quote,
+          entryCount: data.entry_count,
+          notificationStatus: data.notification,
+        };
+        const {
+          fullname, email, favQuote, entryCount, notificationStatus,
+        } = userDetails;
+        document.title = `${fullname} | MyDiary`;
+        fullNameHeading.innerText = fullname;
+        fullnameField.value = fullname;
+        emailField.value = email;
+        favQuoteTextField.value = favQuote || '';
+        const favoriteQuote = favQuote || 'A wise man once said, put your favorite quote here';
+        favoriteQuoteHeading.innerHTML = `<i class="fa fa-quote-left"></i>${favoriteQuote}<i class="fa fa-quote-right"></i>`;
+        entriesCountField.firstElementChild.innerHTML = entryCount || '?';
+        reminderOption.value = notificationStatus;
+      } else if (status === 'error') {
+        let msg = '';
+        if (errors !== undefined) {
+          const { firstMessage } = errors[0];
+          msg = firstMessage;
+        } else if (message !== undefined) {
+          msg = message;
+        }
+        msg = encodeURIComponent(msg);
+        window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
+      }
+    })
+    .catch((err) => {
+      window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${err}`;
+    });
 };
 
 const updateProfile = (event) => {
@@ -67,8 +111,6 @@ const updateProfile = (event) => {
         const userData = {
           fullname: data.fullname,
           email: data.email,
-          favQuote: data.fav_quote,
-          entryCount: data.entryCount || null,
         };
         localStorage.setItem('user', JSON.stringify(userData));
 
@@ -93,9 +135,20 @@ const updateProfile = (event) => {
     });
 };
 
+const enableInput = () => {
+  fullnameField.disabled = false;
+  emailField.disabled = false;
+  favQuoteTextField.disabled = false;
+  editProfileButton.value = 'Save';
+  editProfileButton.id = 'save-profile-btn';
+  favQuoteTextField.focus();
+  const saveProfileButton = document.getElementById('save-profile-btn');
+  saveProfileButton.addEventListener('click', updateProfile);
+};
+
 const updateNotification = (event) => {
   event.preventDefault();
-  const url = `${baseUrl}/user/notification`;
+  const url = `${baseUrl}/users/notification`;
   const option = reminderOption.value;
   if (option === '') {
     return;
@@ -138,11 +191,13 @@ const updateNotification = (event) => {
 window.onload = () => {
   if (profileSettingsBox !== null) {
     if (checkCookie('token') === false) {
-      const msg = 'You are not authorized to perform this action, login to continue';
+      const msg = encodeURIComponent('You are not authorized to perform this action, login to continue');
       window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
     }
-    editProfileButton.addEventListener('click', updateProfile);
+    disableInput();
+    editProfileButton.addEventListener('click', enableInput);
     editReminderButton.addEventListener('click', updateNotification);
+    reminderOption.addEventListener('change', activateReminderAction);
     displayProfile();
   }
 };

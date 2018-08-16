@@ -5,6 +5,34 @@ import ClientController from './clientController';
 dotenv.config();
 
 class UserController extends ClientController {
+  getUserDetails(req, res, next) {
+    // using obj destructring
+    const { id } = req.userData;
+    const query = `SELECT u.id, u.fullname, u.email, u.fav_quote, u.notification, u.notification_time, COUNT(e.id) AS entry_count
+      FROM users u
+      LEFT JOIN entries e
+      ON u.id = e.user_id
+      WHERE u.id=($1)
+      GROUP BY u.id`;
+    this._client.query(query, [id])
+      .then((result) => {
+        if (result.rowCount > 0) {
+          res.status(200)
+            .json({
+              status: 'success',
+              data: result.rows[0],
+            });
+        } else {
+          const error = new Error("User doesn't exist");
+          error.status = 404;
+          next(error);
+        }
+      })
+      .catch((e) => {
+        next(e);
+      });
+  }
+
   update(req, res, next) {
     const { fullname, email } = req.body;
     const favouriteQuote = (Object.prototype.hasOwnProperty.call(req.body, 'fav_quote')) ? req.body.fav_quote : null;

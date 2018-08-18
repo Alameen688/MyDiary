@@ -203,6 +203,9 @@ main {
     text-align: center;
     font-weight: normal;
 }
+.loader{
+    margin: 0 auto;
+}
 ul#error-msg{
     background-color: #db4437;
     color: whitesmoke;
@@ -261,6 +264,12 @@ a.item {
   width: 50px;
   height: 50px;
   margin: 20px;
+}
+.empty-entry-info {
+    text-align: center;
+    color: #fff;
+    margin: 0 auto;
+    font-size: 1.2rem;
 }
 
 [entry-letter]:before {

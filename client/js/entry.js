@@ -1,4 +1,4 @@
-/* global baseUrl, checkCookie, getOptions, validateEntryField */
+/* global baseUrl, checkCookie, getOptions, validateEntryField, startLoadingBtn, endLoadingBtn */
 /* eslint-disable radix */
 const errorBoxElement = document.getElementById('error-box');
 const entrySubjectField = document.getElementById('write-subject');
@@ -13,9 +13,11 @@ const viewEntryContent = document.getElementById('entry-content');
 const viewEntryDate = document.getElementById('date');
 const floatingActionButton = document.getElementById('floating-button');
 const navigationLinkElement = document.getElementsByClassName('nav-links')[0];
+const loaderElement = document.getElementsByClassName('loader')[0];
 
 let errorMsgCode;
 
+/* URL method from https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams */
 const checkUrlForId = () => {
   const currentLocation = new URL(document.location);
   const params = (currentLocation).searchParams;
@@ -56,6 +58,8 @@ const getEntryItemCode = (id, title, date) => {
 
 const addNewEntry = (event) => {
   event.preventDefault();
+  const returnText = newEntryButton.value;
+  const loadingText = 'Creating..';
   const errorMsgElement = document.getElementById('error-msg');
   if (errorMsgElement !== null) {
     errorMsgElement.parentNode.removeChild(errorMsgElement);
@@ -73,6 +77,9 @@ const addNewEntry = (event) => {
     errorBoxElement.innerHTML = errorMsgCode;
     return;
   }
+
+  startLoadingBtn(newEntryButton, loadingText);
+
   const newEntryData = {
     title,
     content,
@@ -81,18 +88,18 @@ const addNewEntry = (event) => {
 
   fetch(url, options)
     .then(res => res.json())
-    .then((result) => {
-      const { status, message, errors } = result;
+    .then(({ status, message, errors }) => {
+      endLoadingBtn(newEntryButton, returnText);
       let errorMsgs = '';
       if (status === 'success') {
         window.location = `${window.location.protocol}//${window.location.host}/client/list-entry.html`;
       } else if (status === 'error') {
-        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+        if (errors) {
           errors.forEach((error) => {
             errorMsgs += `<li>${error}</li>`;
           });
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
-        } else if (Object.prototype.hasOwnProperty.call(result, 'message')) {
+        } else if (message) {
           errorMsgs += `<li>${message}</li>`;
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
         }
@@ -100,6 +107,7 @@ const addNewEntry = (event) => {
       }
     })
     .catch((err) => {
+      endLoadingBtn(newEntryButton, returnText);
       const message = `<li>${err}</li>`;
       errorMsgCode = `<ul id="error-msg">${message}</ul>`;
       errorBoxElement.innerHTML = errorMsgCode;
@@ -107,9 +115,9 @@ const addNewEntry = (event) => {
 };
 
 const saveEditEntry = (event, id) => {
-  /** URL method from https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams* */
   event.preventDefault();
-
+  const returnText = editEntryButton.value;
+  const loadingText = 'Updating..';
   const url = `${baseUrl}/entries/${id}`;
   const title = entrySubjectField.value;
   const content = entryContentField.value;
@@ -123,6 +131,9 @@ const saveEditEntry = (event, id) => {
     errorBoxElement.innerHTML = errorMsgCode;
     return;
   }
+
+  startLoadingBtn(editEntryButton, loadingText);
+
   const editEntryData = {
     title,
     content,
@@ -131,18 +142,18 @@ const saveEditEntry = (event, id) => {
 
   fetch(url, options)
     .then(res => res.json())
-    .then((result) => {
-      const { status, message, errors } = result;
+    .then(({ status, message, errors }) => {
+      endLoadingBtn(editEntryButton, returnText);
       let errorMsgs = '';
       if (status === 'success') {
         window.location = `${window.location.protocol}//${window.location.host}/client/view-entry.html?id=${id}`;
       } else if (status === 'error') {
-        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+        if (errors) {
           errors.forEach((error) => {
             errorMsgs += `<li>${error}</li>`;
           });
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
-        } else if (Object.prototype.hasOwnProperty.call(result, 'message')) {
+        } else if (message) {
           errorMsgs += `<li>${message}</li>`;
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
         }
@@ -150,6 +161,7 @@ const saveEditEntry = (event, id) => {
       }
     })
     .catch((err) => {
+      endLoadingBtn(editEntryButton, returnText);
       const message = `<li>${err}</li>`;
       errorMsgCode = `<ul id="error-msg">${message}</ul>`;
       errorBoxElement.innerHTML = errorMsgCode;
@@ -194,12 +206,18 @@ const getAllEntries = () => {
   fetch(url, options)
     .then(res => res.json())
     .then((result) => {
+      loaderElement.parentNode.removeChild(loaderElement);
       const { status, data, message } = result;
       if (status === 'success') {
-        data.forEach((entry) => {
-          const entryItemCode = getEntryItemCode(entry.id, entry.title, entry.created_at);
-          entryGridElement.innerHTML += entryItemCode;
-        });
+        if (data.length > 0) {
+          data.forEach((entry) => {
+            const entryItemCode = getEntryItemCode(entry.id, entry.title, entry.created_at);
+            entryGridElement.innerHTML += entryItemCode;
+          });
+        } else {
+          const emptyEntryMsg = 'You do not have any diary entry yet. Add a diary entry';
+          entryGridElement.innerHTML += `<div class="empty-entry-info">${emptyEntryMsg}</div>`;
+        }
       } else if (status === 'error') {
         errorMsgCode = `<div id="error-msg">${message}</div>`;
         entryGridElement.innerHTML = errorMsgCode;
@@ -255,34 +273,32 @@ window.onload = () => {
   // add profile image if user is logged in
   if (checkCookie('token') === true) {
     navigationLinkElement.innerHTML += '<a href="profile.html"><img id="user-icon" src="images/avatar.png"/></a>';
-  }
-  if (newEntryButton !== null) {
-    if (checkCookie('token') === false) {
-      const msg = 'You are not authorized to perform this action, login to continue';
-      window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
+    if (newEntryButton !== null) {
+      newEntryButton.addEventListener('click', addNewEntry);
     }
-    newEntryButton.addEventListener('click', addNewEntry);
-  }
-  if (editEntryButton !== null) {
-    checkUrlForId();
-    const currentLocation = new URL(document.location);
-    const params = (currentLocation).searchParams;
-    const urlIdParam = params.get('id').trim();
-    const entryId = parseInt(urlIdParam);
-    populateEntryToEdit(entryId);
-    editEntryButton.addEventListener('click', (event) => {
-      saveEditEntry(event, entryId);
-    });
-  }
-  if (gridBoxElement !== null) {
-    getAllEntries();
-  }
-  if (viewEntryContentBox !== null) {
-    checkUrlForId();
-    const currentLocation = new URL(document.location);
-    const params = (currentLocation).searchParams;
-    const urlIdParam = params.get('id').trim();
-    const entryId = parseInt(urlIdParam);
-    getEntryById(entryId);
+    if (editEntryButton !== null) {
+      checkUrlForId();
+      const currentLocation = new URL(document.location);
+      const params = (currentLocation).searchParams;
+      const urlIdParam = params.get('id').trim();
+      const entryId = parseInt(urlIdParam);
+      populateEntryToEdit(entryId);
+      editEntryButton.addEventListener('click', (event) => {
+        saveEditEntry(event, entryId);
+      });
+    }
+    if (gridBoxElement !== null) {
+      getAllEntries();
+    }
+    if (viewEntryContentBox !== null) {
+      checkUrlForId();
+      const currentLocation = new URL(document.location);
+      const params = (currentLocation).searchParams;
+      const urlIdParam = params.get('id').trim();
+      const entryId = parseInt(urlIdParam);
+      getEntryById(entryId);
+    }
+  } else {
+    window.location = `${window.location.protocol}//${window.location.host}/client/login.html`;
   }
 };

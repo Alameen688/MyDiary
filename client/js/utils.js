@@ -47,3 +47,15 @@ const getOptions = (method, payload) => {
   };
   return options;
 };
+
+const startLoadingBtn = (element, loadingText) => {
+  const elementToDisable = element;
+  elementToDisable.disabled = true;
+  elementToDisable.value = loadingText;
+};
+
+const endLoadingBtn = (element, returnText) => {
+  const elementToEnable = element;
+  elementToEnable.disabled = false;
+  elementToEnable.value = returnText;
+};

@@ -1,4 +1,5 @@
-/* global baseUrl, checkCookie, getOptions, validateEntryField, startLoadingBtn, endLoadingBtn */
+/* global baseUrl, checkCookie, getOptions, validateEntryField,
+startLoadingBtn, endLoadingBtn, logout */
 /* eslint-disable radix */
 const errorBoxElement = document.getElementById('error-box');
 const entrySubjectField = document.getElementById('write-subject');
@@ -12,8 +13,9 @@ const viewEntryTitle = document.getElementById('entry-title');
 const viewEntryContent = document.getElementById('entry-content');
 const viewEntryDate = document.getElementById('date');
 const floatingActionButton = document.getElementById('floating-button');
-const navigationLinkElement = document.getElementsByClassName('nav-links')[0];
 const loaderElement = document.getElementsByClassName('loader')[0];
+const logoutBtn = document.getElementById('btn-logout');
+
 
 let errorMsgCode;
 
@@ -235,10 +237,9 @@ const getEntryById = (id) => {
 
   fetch(url, options)
     .then(res => res.json())
-    .then((result) => {
-      const {
-        status, data, message, errors,
-      } = result;
+    .then(({
+      status, data, message, errors,
+    }) => {
       if (status === 'success') {
         const entryDate = formatDate(data.created_at);
         const entryTitleCode = `
@@ -248,16 +249,16 @@ const getEntryById = (id) => {
         viewEntryTitle.innerHTML = entryTitleCode;
         viewEntryDate.innerHTML = entryDateCode;
         viewEntryContent.innerHTML = data.content;
-        document.title = `${data.title}| MyDiary`;
+        document.title = `${data.title} | MyDiary`;
         floatingActionButton.firstElementChild.setAttribute('href', `/client/edit-entry.html?id=${data.id}`);
       } else if (status === 'error') {
-        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+        if (errors) {
           let errorMsgs = '';
           errors.forEach((error) => {
             errorMsgs += `<li>${error}</li>`;
           });
           errorMsgCode = `<div id="error-msg"><ul>${errorMsgs}</ul></div>`;
-        } else if (Object.prototype.hasOwnProperty.call(result, 'message')) {
+        } else if (message) {
           errorMsgCode = `<div id="error-msg">${message}</div>`;
         }
         viewEntryContentBox.innerHTML = errorMsgCode;
@@ -272,7 +273,7 @@ const getEntryById = (id) => {
 window.onload = () => {
   // add profile image if user is logged in
   if (checkCookie('token') === true) {
-    navigationLinkElement.innerHTML += '<a href="profile.html"><img id="user-icon" src="images/avatar.png"/></a>';
+    logoutBtn.addEventListener('click', logout);
     if (newEntryButton !== null) {
       newEntryButton.addEventListener('click', addNewEntry);
     }

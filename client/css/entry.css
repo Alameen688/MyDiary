@@ -24,11 +24,20 @@ nav {
     font-size: 1.2rem;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
-nav a {
+nav a{
     text-decoration: none;
     color: #fff;
+    margin-right: 8px;
 }
-.nav-links .btn {
+nav a:hover{
+    color: #FAEDB8;
+}
+nav a.nav-item{
+    font-size: 1rem;
+    border: 1px solid #fff;
+    padding: 8px 10px;
+}
+.nav-links .btn{
     padding: 0.5rem;
     color: #ffffff;
     border: none;

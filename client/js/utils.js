@@ -59,3 +59,9 @@ const endLoadingBtn = (element, returnText) => {
   elementToEnable.disabled = false;
   elementToEnable.value = returnText;
 };
+
+const logout = (event) => {
+  event.preventDefault();
+  setCookie('token', '', -2);
+  window.location = `${window.location.protocol}//${window.location.host}/client/login.html`;
+};

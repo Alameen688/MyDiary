@@ -1,4 +1,4 @@
-/* global baseUrl, checkCookie, setCookie, getOptions, validateProfileField */
+/* global baseUrl, checkCookie, getOptions, validateProfileField, logout */
 const errorBoxElement = document.getElementsByClassName('error-box')[0];
 const notificationErrorBox = document.getElementsByClassName('error-box')[1];
 const profileSettingsBox = document.getElementById('settings-box');
@@ -178,12 +178,6 @@ const updateNotification = (event) => {
       errorMsgCode = `<ul id="error-msg">${message}</ul>`;
       notificationErrorBox.innerHTML = errorMsgCode;
     });
-};
-
-const logout = (event) => {
-  event.preventDefault();
-  setCookie('token', '', -2);
-  window.location = `${window.location.protocol}//${window.location.host}/client/login.html`;
 };
 
 window.onload = () => {

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars, no-plusplus */
-const baseUrl = 'https://mydiaryoxygen.herokuapp.com/api/v1';
+const baseUrl = 'http://127.0.0.1:3000/api/v1';
 /** WORKING WITH COOKIES REFERENCE https://www.w3schools.com/js/js_cookies.asp * */
 const getCookie = (cname) => {
   const name = `${cname}=`;
@@ -28,4 +28,40 @@ const checkCookie = (cname) => {
     return true;
   }
   return false;
+};
+
+let token;
+if (checkCookie('token')) {
+  token = getCookie('token');
+}
+
+const getOptions = (method, payload) => {
+  const options = {
+    method,
+    headers: {
+      Accept: 'application/json, text/plain,  */*',
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  };
+  return options;
+};
+
+const startLoadingBtn = (element, loadingText) => {
+  const elementToDisable = element;
+  elementToDisable.disabled = true;
+  elementToDisable.value = loadingText;
+};
+
+const endLoadingBtn = (element, returnText) => {
+  const elementToEnable = element;
+  elementToEnable.disabled = false;
+  elementToEnable.value = returnText;
+};
+
+const logout = (event) => {
+  event.preventDefault();
+  setCookie('token', '', -2);
+  window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/login.html`;
 };

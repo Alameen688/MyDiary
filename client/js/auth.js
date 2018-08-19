@@ -54,12 +54,6 @@ const login = (event) => {
       let errorMsgs = '';
       if (status === 'success') {
         setCookie('token', data.token, 2);
-        const userData = {
-          fullname: data.fullname,
-          email: data.email,
-        };
-        localStorage.setItem('user', JSON.stringify(userData));
-
         window.location = `${window.location.protocol}//${window.location.host}/client/list-entry.html`;
       } else if (status === 'error') {
         if (errors) {

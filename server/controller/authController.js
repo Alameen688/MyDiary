@@ -8,11 +8,12 @@ dotenv.config();
 
 class AuthController extends ClientController {
   create(req, res, next) {
-    bcrypt.hash(req.body.password, 10)
+    const { fullname, email, password } = req.body;
+    bcrypt.hash(password, 10)
       .then((hash) => {
         const action = `INSERT INTO users(fullname, email, password, created_at, updated_at)
           VALUES($1, $2, $3, $4, $5) RETURNING fullname, email, created_at, updated_at`;
-        const values = [req.body.fullname, req.body.email, hash, 'NOW()', 'NOW()'];
+        const values = [fullname, email.toLowerCase(), hash, 'NOW()', 'NOW()'];
         const query = {
           text: action,
           values,
@@ -44,7 +45,7 @@ class AuthController extends ClientController {
 
   login(req, res, next) {
     const { email, password } = req.body;
-    this._client.query('SELECT id, fullname, email, password, fav_quote FROM users WHERE email=($1)', [email])
+    this._client.query('SELECT id, fullname, email, password, fav_quote FROM users WHERE email=($1)', [email.toLowerCase()])
       .then((result) => {
         if (result.rowCount > 0) {
           const data = result.rows[0];

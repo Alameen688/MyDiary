@@ -47,3 +47,21 @@ const getOptions = (method, payload) => {
   };
   return options;
 };
+
+const startLoadingBtn = (element, loadingText) => {
+  const elementToDisable = element;
+  elementToDisable.disabled = true;
+  elementToDisable.value = loadingText;
+};
+
+const endLoadingBtn = (element, returnText) => {
+  const elementToEnable = element;
+  elementToEnable.disabled = false;
+  elementToEnable.value = returnText;
+};
+
+const logout = (event) => {
+  event.preventDefault();
+  setCookie('token', '', -2);
+  window.location = `${window.location.protocol}//${window.location.host}/client/login.html`;
+};

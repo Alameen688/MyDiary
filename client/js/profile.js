@@ -1,4 +1,4 @@
-/* global baseUrl, checkCookie, getOptions, validateProfileField */
+/* global baseUrl, checkCookie, getOptions, validateProfileField, logout */
 const errorBoxElement = document.getElementsByClassName('error-box')[0];
 const notificationErrorBox = document.getElementsByClassName('error-box')[1];
 const profileSettingsBox = document.getElementById('settings-box');
@@ -11,6 +11,8 @@ const entriesCountField = document.getElementsByClassName('entries-count')[0];
 const editProfileButton = document.getElementById('edit-profile-btn');
 const editReminderButton = document.getElementById('edit-rem-btn');
 const reminderOption = document.getElementById('reminder-option');
+const logoutBtn = document.getElementById('btn-logout');
+
 
 let errorMsgCode;
 
@@ -36,7 +38,6 @@ const displayProfile = () => {
       status, data, message, errors,
     }) => {
       if (status === 'success') {
-        // const userDetails = JSON.parse(localStorage.getItem('user'));
         const userDetails = {
           fullname: data.fullname,
           email: data.email,
@@ -102,26 +103,17 @@ const updateProfile = (event) => {
 
   fetch(url, options)
     .then(res => res.json())
-    .then((result) => {
-      const {
-        status, message, errors, data,
-      } = result;
+    .then(({ status, message, errors }) => {
       let errorMsgs = '';
       if (status === 'success') {
-        const userData = {
-          fullname: data.fullname,
-          email: data.email,
-        };
-        localStorage.setItem('user', JSON.stringify(userData));
-
         window.location = `${window.location.protocol}//${window.location.host}/client/profile.html`;
       } else if (status === 'error') {
-        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+        if (errors) {
           errors.forEach((error) => {
             errorMsgs += `<li>${error}</li>`;
           });
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
-        } else if (Object.prototype.hasOwnProperty.call(result, 'message')) {
+        } else if (message) {
           errorMsgs += `<li>${message}</li>`;
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
         }
@@ -191,13 +183,14 @@ const updateNotification = (event) => {
 window.onload = () => {
   if (profileSettingsBox !== null) {
     if (checkCookie('token') === false) {
-      const msg = encodeURIComponent('You are not authorized to perform this action, login to continue');
-      window.location = `${window.location.protocol}//${window.location.host}/client/error.html?msg=${msg}`;
+      window.location = `${window.location.protocol}//${window.location.host}/client/login.html`;
+    } else {
+      disableInput();
+      displayProfile();
+      editProfileButton.addEventListener('click', enableInput);
+      editReminderButton.addEventListener('click', updateNotification);
+      reminderOption.addEventListener('change', activateReminderAction);
+      logoutBtn.addEventListener('click', logout);
     }
-    disableInput();
-    editProfileButton.addEventListener('click', enableInput);
-    editReminderButton.addEventListener('click', updateNotification);
-    reminderOption.addEventListener('change', activateReminderAction);
-    displayProfile();
   }
 };

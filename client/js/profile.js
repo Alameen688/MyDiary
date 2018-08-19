@@ -1,5 +1,6 @@
-/* global baseUrl, checkCookie, getCookie, validateProfileField */
-const errorBoxElement = document.getElementById('error-box');
+/* global baseUrl, checkCookie, getOptions, validateProfileField, logout */
+const errorBoxElement = document.getElementsByClassName('error-box')[0];
+const notificationErrorBox = document.getElementsByClassName('error-box')[1];
 const profileSettingsBox = document.getElementById('settings-box');
 const fullNameHeading = document.getElementById('fullname-heading');
 const fullnameField = document.getElementById('full-name');
@@ -8,32 +9,74 @@ const favoriteQuoteHeading = document.getElementById('fav-quote');
 const favQuoteTextField = document.getElementById('fav-quote-text');
 const entriesCountField = document.getElementsByClassName('entries-count')[0];
 const editProfileButton = document.getElementById('edit-profile-btn');
+const editReminderButton = document.getElementById('edit-rem-btn');
+const reminderOption = document.getElementById('reminder-option');
+const logoutBtn = document.getElementById('btn-logout');
+
 
 let errorMsgCode;
 
-let token;
-if (checkCookie('token')) {
-  token = getCookie('token');
-}
+const disableInput = () => {
+  fullnameField.disabled = true;
+  emailField.disabled = true;
+  favQuoteTextField.disabled = true;
+  editReminderButton.disabled = true;
+};
+
+const activateReminderAction = () => {
+  editReminderButton.disabled = false;
+  editReminderButton.classList.add('reminder-btn-active');
+};
 
 const displayProfile = () => {
-  const userDetails = JSON.parse(localStorage.getItem('user'));
-  const {
-    fullname, email, favQuote, entryCount,
-  } = userDetails;
-  document.title = `${fullname} | MyDiary`;
-  fullNameHeading.innerText = fullname;
-  fullnameField.value = fullname;
-  emailField.value = email;
-  favQuoteTextField.value = favQuote || '';
-  const favoriteQuote = favQuote || 'A wise man once said, put your favorite quote here';
-  favoriteQuoteHeading.innerHTML = `<i class="fa fa-quote-left"></i>${favoriteQuote}<i class="fa fa-quote-right"></i>`;
-  entriesCountField.firstElementChild.innerHTML = entryCount || '?';
+  const url = `${baseUrl}/users/profile`;
+  const options = getOptions('GET');
+
+  fetch(url, options)
+    .then(res => res.json())
+    .then(({
+      status, data, message, errors,
+    }) => {
+      if (status === 'success') {
+        const userDetails = {
+          fullname: data.fullname,
+          email: data.email,
+          favQuote: data.fav_quote,
+          entryCount: data.entry_count,
+          notificationStatus: data.notification,
+        };
+        const {
+          fullname, email, favQuote, entryCount, notificationStatus,
+        } = userDetails;
+        document.title = `${fullname} | MyDiary`;
+        fullNameHeading.innerText = fullname;
+        fullnameField.value = fullname;
+        emailField.value = email;
+        favQuoteTextField.value = favQuote || '';
+        const favoriteQuote = favQuote || 'A wise man once said, put your favorite quote here';
+        favoriteQuoteHeading.innerHTML = `<i class="fa fa-quote-left"></i>${favoriteQuote}<i class="fa fa-quote-right"></i>`;
+        entriesCountField.firstElementChild.innerHTML = entryCount || '?';
+        reminderOption.value = notificationStatus;
+      } else if (status === 'error') {
+        let msg = '';
+        if (errors !== undefined) {
+          const { firstMessage } = errors[0];
+          msg = firstMessage;
+        } else if (message !== undefined) {
+          msg = message;
+        }
+        msg = encodeURIComponent(msg);
+        window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/error.html?msg=${msg}`;
+      }
+    })
+    .catch((err) => {
+      window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/error.html?msg=${err}`;
+    });
 };
 
 const updateProfile = (event) => {
   event.preventDefault();
-  const url = `${baseUrl}/auth/updateuser`;
+  const url = `${baseUrl}/users/update`;
   const userFullName = fullnameField.value;
   const userEmail = emailField.value;
   const userFavQuote = favQuoteTextField.value;
@@ -56,39 +99,21 @@ const updateProfile = (event) => {
     fav_quote: userFavQuote,
   };
 
-  const options = {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json, text/plain,  */*',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(editProfileData),
-  };
+  const options = getOptions('PUT', editProfileData);
+
   fetch(url, options)
     .then(res => res.json())
-    .then((result) => {
-      const {
-        status, message, errors, data,
-      } = result;
+    .then(({ status, message, errors }) => {
       let errorMsgs = '';
       if (status === 'success') {
-        const userData = {
-          fullname: data.fullname,
-          email: data.email,
-          favQuote: data.fav_quote,
-          entryCount: data.entryCount || null,
-        };
-        localStorage.setItem('user', JSON.stringify(userData));
-
         window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/profile.html`;
       } else if (status === 'error') {
-        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+        if (errors) {
           errors.forEach((error) => {
             errorMsgs += `<li>${error}</li>`;
           });
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
-        } else if (Object.prototype.hasOwnProperty.call(result, 'message')) {
+        } else if (message) {
           errorMsgs += `<li>${message}</li>`;
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
         }
@@ -102,13 +127,70 @@ const updateProfile = (event) => {
     });
 };
 
+const enableInput = () => {
+  fullnameField.disabled = false;
+  emailField.disabled = false;
+  favQuoteTextField.disabled = false;
+  editProfileButton.value = 'Save';
+  editProfileButton.id = 'save-profile-btn';
+  favQuoteTextField.focus();
+  const saveProfileButton = document.getElementById('save-profile-btn');
+  saveProfileButton.addEventListener('click', updateProfile);
+};
+
+const updateNotification = (event) => {
+  event.preventDefault();
+  const url = `${baseUrl}/users/notification`;
+  const option = reminderOption.value;
+  if (option === '') {
+    return;
+  }
+
+  const payload = {
+    status: option,
+  };
+  const requestOptions = getOptions('PUT', payload);
+  fetch(url, requestOptions)
+    .then(res => res.json())
+    .then(({
+      status, message, errors, data,
+    }) => {
+      let errorMsgs = '';
+      if (status === 'success') {
+        const info = `<li>Succesfully turned ${data.notification} notification</li>`;
+        errorMsgCode = `<ul id="error-msg">${info}</ul>`;
+        notificationErrorBox.innerHTML = errorMsgCode;
+      } else if (status === 'error') {
+        if (errors) {
+          errors.forEach((error) => {
+            errorMsgs += `<li>${error}</li>`;
+          });
+          errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
+        } else {
+          errorMsgs += `<li>${message}</li>`;
+          errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
+        }
+        notificationErrorBox.innerHTML = errorMsgCode;
+      }
+    })
+    .catch((err) => {
+      const message = `<li>${err}</li>`;
+      errorMsgCode = `<ul id="error-msg">${message}</ul>`;
+      notificationErrorBox.innerHTML = errorMsgCode;
+    });
+};
+
 window.onload = () => {
   if (profileSettingsBox !== null) {
     if (checkCookie('token') === false) {
-      const msg = 'You are not authorized to perform this action, login to continue';
-      window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/error.html?msg=${msg}`;
+      window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/login.html`;
+    } else {
+      disableInput();
+      displayProfile();
+      editProfileButton.addEventListener('click', enableInput);
+      editReminderButton.addEventListener('click', updateNotification);
+      reminderOption.addEventListener('change', activateReminderAction);
+      logoutBtn.addEventListener('click', logout);
     }
-    editProfileButton.addEventListener('click', updateProfile);
-    displayProfile();
   }
 };

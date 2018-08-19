@@ -1,4 +1,5 @@
-/* global baseUrl, setCookie, validateLogin, validateSignUp */
+/* global baseUrl, checkCookie, setCookie, validateLogin,
+ validateSignUp, startLoadingBtn, endLoadingBtn */
 const errorBoxElement = document.getElementById('error-box');
 const fullnameField = document.getElementById('fullname');
 const emailField = document.getElementById('email');
@@ -11,6 +12,8 @@ let errorMsgCode;
 
 const login = (event) => {
   event.preventDefault();
+  const returnText = submitLogin.value;
+  const loadingText = 'Verifying';
   const errorMsgElement = document.getElementById('error-msg');
   if (errorMsgElement !== null) {
     errorMsgElement.parentNode.removeChild(errorMsgElement);
@@ -29,6 +32,7 @@ const login = (event) => {
     return;
   }
 
+  startLoadingBtn(submitLogin, loadingText);
   const loginData = {
     email,
     password,
@@ -43,43 +47,38 @@ const login = (event) => {
   };
   fetch(url, options)
     .then(res => res.json())
-    .then((result) => {
-      const {
-        status, message, errors, data,
-      } = result;
+    .then(({
+      status, message, errors, data,
+    }) => {
+      endLoadingBtn(submitLogin, returnText);
       let errorMsgs = '';
       if (status === 'success') {
         setCookie('token', data.token, 2);
-        const userData = {
-          fullname: data.fullname,
-          email: data.email,
-          favQuote: data.fav_quote,
-          entryCount: data.entryCount || null,
-        };
-        localStorage.setItem('user', JSON.stringify(userData));
-
         window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/list-entry.html`;
       } else if (status === 'error') {
-        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+        if (errors) {
           errors.forEach((error) => {
             errorMsgs += `<li>${error}</li>`;
           });
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
-        } else if (Object.prototype.hasOwnProperty.call(result, 'message')) {
+        } else if (message) {
           errorMsgs += `<li>${message}</li>`;
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
         }
         errorBoxElement.innerHTML = errorMsgCode;
       }
     })
-    .catch((err) => {
-      const message = `<li>${err}</li>`;
-      errorMsgCode = `<ul id="error-msg">${message}</ul>`;
+    .catch(() => {
+      endLoadingBtn(submitLogin, returnText);
+      const message = 'Oops unable to connect to the server.';
+      errorMsgCode = `<ul id="error-msg"><li>${message}</li></ul>`;
       errorBoxElement.innerHTML = errorMsgCode;
     });
 };
 const signup = (event) => {
   event.preventDefault();
+  const returnText = submitSignUp.value;
+  const loadingText = 'Please wait..';
   const errorMsgElement = document.getElementById('error-msg');
   if (errorMsgElement !== null) {
     errorMsgElement.parentNode.removeChild(errorMsgElement);
@@ -103,6 +102,8 @@ const signup = (event) => {
     return;
   }
 
+  startLoadingBtn(submitSignUp, loadingText);
+
   const signUpData = {
     fullname,
     email,
@@ -118,31 +119,35 @@ const signup = (event) => {
   };
   fetch(url, options)
     .then(res => res.json())
-    .then((result) => {
-      const { status, message, errors } = result;
+    .then(({ status, message, errors }) => {
+      endLoadingBtn(submitSignUp, returnText);
       let errorMsgs = '';
-      if (result.status === 'success') {
+      if (status === 'success') {
         window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/login.html`;
       } else if (status === 'error') {
-        if (Object.prototype.hasOwnProperty.call(result, 'errors')) {
+        if (errors) {
           errors.forEach((error) => {
             errorMsgs += `<li>${error}</li>`;
           });
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
-        } else if (Object.prototype.hasOwnProperty.call(result, 'message')) {
+        } else if (message) {
           errorMsgs += `<li>${message}</li>`;
           errorMsgCode = `<ul id="error-msg">${errorMsgs}</ul>`;
         }
         errorBoxElement.innerHTML = errorMsgCode;
       }
     })
-    .catch((err) => {
-      const message = `<li>${err}</li>`;
-      errorMsgCode = `<ul id="error-msg">${message}</ul>`;
+    .catch(() => {
+      endLoadingBtn(submitSignUp, returnText);
+      const message = 'Oops unable to connect to the server.';
+      errorMsgCode = `<ul id="error-msg"><li>${message}</li></ul>`;
       errorBoxElement.innerHTML = errorMsgCode;
     });
 };
 window.onload = () => {
+  if (checkCookie('token') === true) {
+    window.location = `${window.location.protocol}//${window.location.host}/MyDiary/client/list-entry.html`;
+  }
   if (submitLogin !== null) {
     submitLogin.addEventListener('click', login);
   }

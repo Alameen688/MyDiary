@@ -1,11 +1,16 @@
 import express from 'express';
 import expressValidation from 'express-validation';
+import fetch from 'node-fetch';
 import swaggerUi from 'swagger-ui-express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import swaggerDoc from '../swagger.json';
 import router from './router/index';
 import NotificationController from './controller/notificationController';
+import unsplash, { getRandomImages } from './utils/unsplash';
+
+global.fetch = fetch;
+global.randomUnsplashImages = [];
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -34,6 +39,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/localhost/api/v1/entries', router.entries);
+app.use('/localhost/api/v1/auth', router.auth);
 app.use('/api/v1/entries', router.entries);
 app.use('/api/v1/auth', router.auth);
 app.use('/api/v1/users', router.users);
@@ -80,6 +87,11 @@ if (!module.parent) {
     // console.log(`Listening on port ${port}`);
   });
 }
+
+(async () => {
+  global.randomUnsplashImages = await getRandomImages();
+})();
+
 
 const notification = new NotificationController();
 notification.dailyNotifier();

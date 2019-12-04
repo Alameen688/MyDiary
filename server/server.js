@@ -1,4 +1,3 @@
-import cors from 'cors';
 import express from 'express';
 import expressValidation from 'express-validation';
 import fetch from 'node-fetch';

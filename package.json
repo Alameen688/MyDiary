@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Server side app that provides mydiary ui client with data",
   "engines": {
-    "node": "10.0.0"
+    "node": "12.13.0"
   },
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/Alameen688/MyDiary#readme",
   "dependencies": {
-    "bcrypt": "^3.0.0",
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.18.3",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",

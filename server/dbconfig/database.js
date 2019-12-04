@@ -13,7 +13,7 @@ client.connect((err) => {
 });
 // const alterQuery = `ALTER TABLE users ADD COLUMN notification status NOT NULL DEFAULT 'on';
 // ALTER TABLE users ADD COLUMN notification_time TIME NULL`;
-const tableTypeQuery = 'CREATE TYPE status AS ENUM (\'on\', \'off\');';
+const tableTypeQuery = 'DROP TYPE IF EXISTS status CASCADE; CREATE TYPE status AS ENUM (\'on\', \'off\');';
 const userTableQuery = `DROP TABLE IF EXISTS users cascade;
 CREATE TABLE users(id SERIAL PRIMARY KEY, fullname VARCHAR(255) NOT NULL, email VARCHAR(225) UNIQUE NOT NULL, password TEXT NOT NULL, fav_quote TEXT NULL, notification status NOT NULL DEFAULT 'off', notification_time TIME NOT NULL DEFAULT '18:00:00',
 created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`;

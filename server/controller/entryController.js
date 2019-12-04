@@ -4,7 +4,6 @@ import { generateRandomNumber } from '../utils/unsplash';
 
 class EntryController extends ClientController {
   create(req, res, next) {
-    
     const randomImages = global.randomUnsplashImages;
     const imageUrl = global.randomUnsplashImages[generateRandomNumber(0, randomImages.length)];
 

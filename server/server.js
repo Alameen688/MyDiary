@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import expressValidation from 'express-validation';
 import fetch from 'node-fetch';
@@ -39,8 +40,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/localhost/api/v1/entries', router.entries);
-app.use('/localhost/api/v1/auth', router.auth);
 app.use('/api/v1/entries', router.entries);
 app.use('/api/v1/auth', router.auth);
 app.use('/api/v1/users', router.users);

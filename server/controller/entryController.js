@@ -1,12 +1,17 @@
 /* eslint no-underscore-dangle: 0 */
 import ClientController from './clientController';
+import { generateRandomNumber } from '../utils/unsplash';
 
 class EntryController extends ClientController {
   create(req, res, next) {
+    
+    const randomImages = global.randomUnsplashImages;
+    const imageUrl = global.randomUnsplashImages[generateRandomNumber(0, randomImages.length)];
+
     const { title, content } = req.body;
-    const action = `INSERT INTO entries(title, content, user_id, created_at, updated_at)
-      VALUES($1, $2, $3, $4, $5) RETURNING id, title, content, created_at, updated_at `;
-    const values = [title, content, req.userData.id, 'NOW()', 'NOW()'];
+    const action = `INSERT INTO entries(title, content, image_url, user_id, created_at, updated_at)
+      VALUES($1, $2, $3, $4, $5, $6) RETURNING id, title, content, image_url, created_at, updated_at `;
+    const values = [title, content, imageUrl || null, req.userData.id, 'NOW()', 'NOW()'];
     const query = {
       text: action,
       values,

@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 import swaggerDoc from '../swagger.json';
 import router from './router/index';
 import NotificationController from './controller/notificationController';
-import unsplash, { getRandomImages } from './utils/unsplash';
+import { getRandomImages } from './utils/unsplash';
 
 global.fetch = fetch;
 global.randomUnsplashImages = [];

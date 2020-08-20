@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/runtime": "^7.7.4",
     "@babel/runtime-corejs2": "^7.7.4",
-    "bcrypt": "^3.0.7",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",

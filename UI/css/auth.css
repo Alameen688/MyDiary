@@ -1,0 +1,215 @@
+/** Login Styles **/
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto+Slab|Titillium+Web|Lato');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+body{
+    font-family: 'Titillium Web', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    background: #323232;
+}
+header {
+    margin-bottom: 40px;
+}
+header #site-name a{
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    color: #FAEDB8;
+    text-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: rgba(33.3,33.3,33.3);
+    padding: 0.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+nav a {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 8px;
+}
+nav a:hover{
+    color: #FAEDB8;
+}
+nav a.nav-item{
+    font-size: 1rem;
+    border: 1px solid #fff;
+    padding: 8px 10px;
+}
+nav a.nav-item#login{
+    font-size: 1rem;
+    color: black;
+    background-color: #FAEDB8;
+}
+nav a.nav-item#login:hover{
+    background-color: transparent;
+    color: #FAEDB8;
+}
+
+.nav-links .btn {
+    padding: 0.5rem;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-size: 1rem;
+    background-color: #3359DF;
+}
+.nav-links img#user-icon{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 2px solid #ccc;
+}
+main {
+    margin: 0;
+    padding: 0;
+    /*overflow: hidden;*/
+    /*position: absolute;*/
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-box {
+    width: 80%;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+    padding: 20px;
+   /* background: #ccc;*/
+    background: rgba(33.3,33.3,33.3, 0.5);
+    color: #fff;
+    border: 1px solid #7F7FD5;
+    margin-bottom: 20px;
+}
+.login-box h1 {
+    align-content: flex-start;
+    font-size: 2.2rem;
+    border-bottom: 6px solid #7F7FD5;
+    margin-bottom: 50px;
+    padding: 13px 0;
+    color: #fff;
+}
+
+.textbox{
+    overflow: hidden;
+    width: 100%;
+    font-size: 20px;
+    padding: 8px 0;
+    margin: 0px 0 20px 0;
+    border: 1px solid #7F7FD5;
+}
+.textbox i {
+    width: 10%;
+    max-width: 26px;
+    align-content: flex-start;
+    text-align: center;
+    color: grey;
+}
+.textbox input {
+    font-family: 'Titillium Web', sans-serif;
+    width: 80%;
+    border: none;
+    outline: none;
+    background: none;
+    color: #fff;
+    font-size: 1.2rem;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -o-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
+.form-btn{
+    display:block;
+    width:100%;
+    text-align:center;
+    height:60px;
+    line-height:36px;
+    border:1px solid transparent;
+    border-radius:4px;
+    font-weight:600;
+    padding:12px 24px;
+    margin: 30px 0 20px 0;
+    color: #fff;
+    font-size: 1.2rem;
+    transition:opacity 500ms;
+    position:relative;
+    user-select:none;
+    cursor:pointer;
+    opacity:0.95;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -o-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    -webkit-touch-callout:none;
+}
+.form-btn:focus,.form-btn:hover{
+    opacity: 0.5;
+}
+
+.btn-login{
+    background:#7F7FD5;
+}
+.btn-login:hover, btn-login:focus{
+    background:#7F7FD5;
+    background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); 
+    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+}
+.btn-register{
+    background: #8360c3; 
+}
+.btn-register:hover, .btn-register:focus{
+    background: #8360c3; 
+    background: -webkit-linear-gradient(to right, #2ebf91, #8360c3); 
+    background: linear-gradient(to right, #2ebf91, #8360c3);
+}
+.link{
+    font-weight: bold;
+}
+.link a{
+    color: #7F7FD5;
+    text-decoration: none;
+}
+.link a:hover{
+    text-decoration: underline;
+}
+/** Screen sizes 400px and up **/
+@media(min-width: 400px) {
+    .textbox input {
+        width: 90%;
+    }
+}
+
+/** Screen sizes 700px and up **/
+@media(min-width: 700px) {
+    .login-box {
+        width: 50%;
+    }
+}
+
+/** Screen sizes 900px and up **/
+@media(min-width: 900px) {
+    .login-box {
+        width: 40%;
+    }
+}
+
+/** Screen sizes 1000px and up **/
+@media(min-width: 1000px) {
+    .login-box {
+        width: 30%;
+    }
+}

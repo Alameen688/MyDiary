@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/entry.css">
+    <title>Entry title | MyDiary</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div id="site-name"><a href="index.html">MyDiary</a></div>
+            <div class="nav-links">
+                <a class="nav-item" href="profile.html">Profile</a>
+                <a class="nav-item" id="btn-logout" href="index.html">Logout</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div id="entry-content-box">
+            <div id="entry-top">
+                <div>
+                    <h1 id="entry-title"></h1>
+                </div>
+                <div id="date"></div>
+            </div>
+            <div id="entry-content"></div> 
+        </div>
+        
+        <div id="floating-button">
+            <a href="edit-entry.html">
+                <img class="fab-icon" src="images/edit-icon.png">
+            </a>
+        </div>
+    </main>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/entry.js"></script>
+</body>
+</html>

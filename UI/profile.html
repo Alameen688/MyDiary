@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/profile.css">
+    <title>Ogundiran Al-Ameen - MyDiary</title>
+</head>
+<body>
+    <header>
+       <nav>
+        <div id="site-name"><a href="index.html">MyDiary</a></div>
+        <div class="nav-links">
+                <a class="nav-item" href="index.html">Logout</a>
+        </div>
+        </nav>
+        <section id="cover-area">
+            <div class="container">
+                <h1>Ogundiran Al-Ameen</h1>
+                <h4 class="entries-count"><span class="no">20</span> entries</h4>
+                <p id="fav-quote"><i class="fa fa-quote-left"></i>You only live once but if you do it right, once is enough!<i class="fa fa-quote-right"></i></p>
+            </div>
+            <div id="profile-image">
+                <img id="avatar" src="images/avatar.png"/>
+            </div>
+        </section>
+    </header>
+    <main>
+        <div id="settings-box">
+           <h2 class="settings-title">
+               Profile settings
+           </h2>
+            <form action="" id="profile-settings">
+                  <input type="text" name="full-name" class="s-input" id="full-name" placeholder="Full Name" value="Ogundiran Al-Ameen">
+                  <input type="email" name="email" class="s-input" id="email" placeholder="Email" value="Ogundiran12@gmail.com"> 
+                  <textarea rows="2" name="fav-quote-text" class="s-input" id="fav-quote-text" placeholder="Type your favorite quote">You only live once but if you do it right, once is enough!</textarea>
+                  <div class="settings-action">
+                      <input type="submit" value="Save" id="edit-profile-btn" class="s-btn">
+                  </div>
+            </form>
+            <h2 class="settings-title">
+               Reminder settings
+           </h2>
+           <form id="reminder-settings">
+                <select name="reminder-option" id="" class="s-input">
+                     <option value="">Daily evening remainder</option>
+                     <option value="on">On</option>
+                     <option value="off">Off</option>
+              </select>
+              <div class="settings-action">
+                  <input type="submit" value="Activate settings" id="edit-rem-btn" class="s-btn">    
+              </div>
+          </form>
+        </div>
+    </main>
+</body>
+</html>

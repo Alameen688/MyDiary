@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/profile.css">
+    <title>Profile | MyDiary</title>
+</head>
+<body>
+    <header>
+       <nav>
+        <div id="site-name"><a href="index.html">MyDiary</a></div>
+        <div class="nav-links">
+                <a class="nav-item" id="btn-logout" href="index.html">Logout</a>
+        </div>
+        </nav>
+        <section id="cover-area">
+            <div class="container">
+                <h1 id="fullname-heading"></h1>
+                <h4 class="entries-count"><span class="no">?</span> entries</h4>
+                <p id="fav-quote"></p>
+            </div>
+            <div id="profile-image">
+                <img id="avatar" src="images/avatar.png"/>
+            </div>
+        </section>
+    </header>
+    <main>
+        <div id="settings-box">
+           <h2 class="settings-title">
+               Profile settings
+           </h2>
+           <div class="error-box"></div>
+            <form id="profile-settings">
+                  <input type="text" name="full-name" class="s-input" id="full-name" placeholder="Full Name" value="" required>
+                  <input type="email" name="email" class="s-input" id="email" placeholder="Email Address" value="" required> 
+                  <textarea rows="2" name="fav-quote-text" class="s-input" id="fav-quote-text" placeholder="Type your favorite quote" required>Type your favourite quote here!</textarea>
+                  <div class="settings-action">
+                      <input type="button" value="Edit" id="edit-profile-btn" class="s-btn">
+                  </div>
+            </form>
+            <h2 class="settings-title">
+               Reminder settings
+           </h2>
+           <div class="error-box"></div>
+            <form id="reminder-settings">
+                  <select name="reminder-option" id="reminder-option" class="s-input">
+                       <option value="">Daily evening remainder</option>
+                       <option value="on">On</option>
+                       <option value="off">Off</option>
+                </select>
+                <div class="settings-action">
+                    <input type="submit" value="Update settings" id="edit-rem-btn" class="s-btn">    
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/validate.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>
